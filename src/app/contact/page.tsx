@@ -9,27 +9,28 @@ export default function ContactPage() {
   return (
     <>
       {/* Page hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-slate">
+      <section className="pt-40 pb-20 md:pt-48 md:pb-24 bg-slate">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             topText="Get In"
             bottomText="Touch"
             description="Ready to transform your space? Reach out for a free consultation and quote."
             light
+            align="center"
           />
         </div>
       </section>
 
-      <Marquee text="FREE ESTIMATES &amp; CONSULTATIONS" />
+      <Marquee text="FREE ESTIMATES & CONSULTATIONS" />
 
       {/* Contact section */}
-      <section className="py-20 md:py-28 bg-cream">
+      <section className="py-24 md:py-36 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 md:gap-20">
             {/* Form */}
             <div className="lg:col-span-2">
               <ScrollReveal>
-                <h2 className="text-2xl md:text-3xl font-bold text-charcoal uppercase tracking-tight mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-charcoal uppercase tracking-tight mb-10">
                   Send Us a Message
                 </h2>
                 <ContactForm />
@@ -37,16 +38,16 @@ export default function ContactPage() {
             </div>
 
             {/* Sidebar */}
-            <div>
+            <div className="border-t border-tan/20 pt-10 lg:border-t-0 lg:pt-0">
               <ScrollReveal direction="right" delay={200}>
-                <div className="space-y-8">
+                <div className="space-y-10">
                   {/* Phone */}
                   <div>
                     <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal/40 mb-3">
                       Phone
                     </h3>
                     <a
-                      href={`tel:${siteConfig.phone}`}
+                      href={`tel:${siteConfig.phoneTel}`}
                       className="text-xl font-bold text-charcoal hover:text-terracotta transition-colors"
                     >
                       {siteConfig.phone}
@@ -111,7 +112,7 @@ export default function ContactPage() {
         title="Prefer to Call?"
         subtitle={`Reach us directly at ${siteConfig.phone} during business hours.`}
         buttonText="Call Now"
-        href={`tel:${siteConfig.phone}`}
+        href={`tel:${siteConfig.phoneTel}`}
       />
     </>
   );

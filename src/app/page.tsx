@@ -51,17 +51,19 @@ export default function Home() {
       <Hero />
       <Marquee text={siteConfig.businessName.toUpperCase()} />
 
-      {/* Why Choose Us */}
-      <section className="py-20 md:py-28 bg-cream">
+      {/* Why Choose Us -- centered */}
+      <section className="py-24 md:py-36 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
               topText="Why"
               bottomText="Choose Us"
               description="We combine artistry with engineering to deliver surfaces that are as durable as they are beautiful."
+              align="center"
+              className="mb-16 md:mb-20"
             />
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             {features.map((feature, i) => (
               <ScrollReveal key={feature.title} delay={i * 150}>
                 <ServiceCard {...feature} />
@@ -71,35 +73,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Preview */}
-      <section className="py-20 md:py-28 bg-cream-dark">
+      {/* Services Preview -- right aligned header */}
+      <section className="py-24 md:py-36 bg-cream-dark">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
               topText="Our"
               bottomText="Services"
               description="From patios to pool decks, we transform any surface into a work of art."
+              align="right"
+              className="mb-16 md:mb-20"
             />
           </ScrollReveal>
-          <div className="overflow-x-auto pb-4 -mx-6 px-6 snap-x snap-mandatory flex gap-5">
-            {servicePreview.map((service, i) => (
-              <ScrollReveal key={service.title} delay={i * 100}>
+          <ScrollReveal delay={100}>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-8">
+              {servicePreview.map((service) => (
                 <Link
+                  key={service.title}
                   href={service.href}
-                  className="snap-start shrink-0 w-[200px] md:w-[240px] group"
+                  className="group"
                 >
-                  <div className="concrete-texture aspect-square rounded-sm flex items-center justify-center text-5xl text-cream/80 group-hover:scale-105 transition-transform duration-500 shadow-md">
+                  <div className="concrete-texture aspect-square rounded-sm flex items-center justify-center text-4xl md:text-5xl text-cream/80 group-hover:scale-105 transition-transform duration-500 shadow-md">
                     {service.icon}
                   </div>
-                  <p className="mt-4 text-center font-bold text-charcoal uppercase tracking-wider text-sm group-hover:text-terracotta transition-colors">
+                  <p className="mt-4 text-center font-bold text-charcoal uppercase tracking-wider text-xs md:text-sm group-hover:text-terracotta transition-colors">
                     {service.title}
                   </p>
                 </Link>
-              </ScrollReveal>
-            ))}
-          </div>
-          <ScrollReveal delay={300}>
-            <div className="mt-10 text-center">
+              ))}
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={250}>
+            <div className="mt-12 text-center">
               <Link
                 href="/services"
                 className="inline-block px-8 py-3 border-2 border-charcoal text-charcoal font-bold text-sm uppercase tracking-wider rounded-sm hover:bg-charcoal hover:text-cream transition-all duration-300"
@@ -111,20 +116,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Stats -- always centered */}
       <StatsCounter stats={stats} />
 
-      {/* Testimonials */}
-      <section className="py-20 md:py-28 bg-cream">
+      {/* Testimonials -- left aligned header */}
+      <section className="py-24 md:py-36 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
               topText="What"
               bottomText="Clients Say"
-              description="Don't just take our word for it — hear from homeowners and businesses who love their new surfaces."
+              description="Don't just take our word for it -- hear from homeowners and businesses who love their new surfaces."
+              align="left"
+              className="mb-16 md:mb-20"
             />
           </ScrollReveal>
-          <ScrollReveal delay={200}>
+          <ScrollReveal delay={150}>
             <TestimonialCarousel />
           </ScrollReveal>
         </div>

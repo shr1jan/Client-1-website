@@ -56,24 +56,25 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      {/* Page hero */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-slate">
+      {/* Page hero -- left aligned */}
+      <section className="pt-40 pb-20 md:pt-48 md:pb-24 bg-slate">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader
             topText="About"
             bottomText="Us"
             description="The story, people, and values behind every surface we craft."
             light
+            align="left"
           />
         </div>
       </section>
 
       <Marquee text="PASSION FOR PERFECTION" />
 
-      {/* Story */}
-      <section className="py-20 md:py-28 bg-cream">
+      {/* Story -- image left, text right (inherently mixed) */}
+      <section className="py-24 md:py-36 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
             <ScrollReveal direction="left">
               <div className="concrete-texture aspect-[4/3] rounded-sm shadow-lg" />
             </ScrollReveal>
@@ -82,8 +83,10 @@ export default function AboutPage() {
                 <SectionHeader
                   topText="Our"
                   bottomText="Story"
+                  align="left"
+                  className="mb-8"
                 />
-                <div className="space-y-4 text-warm-gray leading-relaxed">
+                <div className="space-y-5 text-warm-gray leading-relaxed">
                   <p>
                     What started as a small crew with a passion for concrete has
                     grown into one of the region&apos;s most trusted decorative
@@ -109,23 +112,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Stats -- centered */}
       <StatsCounter stats={stats} />
 
-      {/* Values */}
-      <section className="py-20 md:py-28 bg-cream-dark">
+      {/* Values -- right aligned header */}
+      <section className="py-24 md:py-36 bg-cream-dark">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
               topText="Our"
               bottomText="Values"
               description="The principles that guide every project we undertake."
+              align="right"
+              className="mb-16 md:mb-20"
             />
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
             {values.map((value, i) => (
               <ScrollReveal key={value.title} delay={i * 100}>
-                <div className="bg-white p-8 md:p-10 rounded-sm border border-tan/20 hover:shadow-lg transition-shadow duration-500">
+                <div className="bg-white p-8 md:p-10 rounded-sm border border-tan/20 hover:shadow-lg transition-shadow duration-500 text-center">
                   <h3 className="text-xl font-bold text-charcoal uppercase tracking-wide mb-3">
                     {value.title}
                   </h3>
@@ -139,17 +144,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-20 md:py-28 bg-cream">
+      {/* Team -- centered */}
+      <section className="py-24 md:py-36 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
               topText="Meet"
               bottomText="The Team"
               description="The skilled professionals who bring your vision to life."
+              align="center"
+              className="mb-16 md:mb-20"
             />
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
             {team.map((member, i) => (
               <ScrollReveal key={i} delay={i * 150}>
                 <div className="text-center group">
