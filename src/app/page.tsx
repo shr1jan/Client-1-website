@@ -104,7 +104,7 @@ export default function Home() {
                   href={service.href}
                   className="group"
                 >
-                  <div className="concrete-texture aspect-square rounded-sm flex items-center justify-center text-4xl md:text-5xl text-cream/80 group-hover:scale-105 transition-transform duration-500 shadow-md">
+                  <div className="concrete-texture aspect-square rounded-sm flex items-center justify-center text-4xl md:text-5xl text-cream group-hover:scale-105 transition-transform duration-500 shadow-md">
                     {service.icon}
                   </div>
                   <p className="mt-4 text-center font-bold text-charcoal uppercase tracking-wider text-xs md:text-sm group-hover:text-terracotta transition-colors">

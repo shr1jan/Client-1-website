@@ -85,7 +85,7 @@ export default function StatsCounter({ stats }: StatsCounterProps) {
         {stats.map((stat) => (
           <div key={stat.label} className="text-center">
             <AnimatedNumber {...stat} triggered={triggered} />
-            <p className="mt-4 text-sm md:text-base uppercase tracking-[0.2em] text-cream/60 font-medium">
+            <p className="mt-4 text-sm md:text-base uppercase tracking-[0.2em] text-cream font-medium">
               {stat.label}
             </p>
           </div>

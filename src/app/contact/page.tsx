@@ -42,7 +42,7 @@ export default function ContactPage() {
                 <div className="space-y-10">
                   {/* Phone */}
                   <div>
-                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal/40 mb-3">
+                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal mb-3">
                       Phone
                     </h3>
                     <a
@@ -55,7 +55,7 @@ export default function ContactPage() {
 
                   {/* Email */}
                   <div>
-                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal/40 mb-3">
+                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal mb-3">
                       Email
                     </h3>
                     <a
@@ -68,7 +68,7 @@ export default function ContactPage() {
 
                   {/* Address */}
                   <div>
-                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal/40 mb-3">
+                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal mb-3">
                       Location
                     </h3>
                     <p className="text-warm-gray">{siteConfig.address}</p>
@@ -76,7 +76,7 @@ export default function ContactPage() {
 
                   {/* Hours */}
                   <div>
-                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal/40 mb-3">
+                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal mb-3">
                       Business Hours
                     </h3>
                     <div className="space-y-2 text-warm-gray text-sm">
@@ -88,11 +88,11 @@ export default function ContactPage() {
 
                   {/* Map placeholder */}
                   <div>
-                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal/40 mb-3">
+                    <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal mb-3">
                       Find Us
                     </h3>
                     <div className="aspect-[4/3] rounded-sm concrete-texture-light flex items-center justify-center shadow-inner">
-                      <div className="text-center text-brown/50">
+                      <div className="text-center text-brown">
                         <div className="text-4xl mb-2">&#9673;</div>
                         <p className="text-sm font-medium uppercase tracking-wider">
                           Map Placeholder

@@ -28,7 +28,7 @@ export default function Footer() {
             <h3 className="text-2xl font-black uppercase tracking-wider mb-4">
               {siteConfig.businessName}
             </h3>
-            <p className="text-cream/60 text-sm leading-relaxed">
+            <p className="text-cream text-sm leading-relaxed">
               {siteConfig.description}
             </p>
             <div className="flex gap-4 mt-6">
@@ -36,7 +36,7 @@ export default function Footer() {
                 <a
                   key={platform}
                   href={href}
-                  className="w-10 h-10 rounded-sm bg-cream/10 flex items-center justify-center text-cream/60 hover:bg-terracotta hover:text-white transition-all duration-300 text-xs uppercase font-bold"
+                  className="w-10 h-10 rounded-sm bg-cream/10 flex items-center justify-center text-cream hover:bg-terracotta hover:text-white transition-all duration-300 text-xs uppercase font-bold"
                   aria-label={platform}
                 >
                   {platform.slice(0, 2).toUpperCase()}
@@ -47,7 +47,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-[0.2em] text-cream/40 mb-6">
+            <h4 className="text-sm font-bold uppercase tracking-[0.2em] text-cream mb-6">
               Quick Links
             </h4>
             <ul className="space-y-3">
@@ -55,7 +55,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-cream/70 hover:text-terracotta transition-colors duration-300 text-sm"
+                    className="text-cream hover:text-terracotta transition-colors duration-300 text-sm"
                   >
                     {link.label}
                   </Link>
@@ -66,14 +66,14 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-[0.2em] text-cream/40 mb-6">
+            <h4 className="text-sm font-bold uppercase tracking-[0.2em] text-cream mb-6">
               Services
             </h4>
             <ul className="space-y-3">
               {services.map((service) => (
                 <li
                   key={service}
-                  className="text-cream/70 text-sm"
+                  className="text-cream text-sm"
                 >
                   {service}
                 </li>
@@ -83,10 +83,10 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-[0.2em] text-cream/40 mb-6">
+            <h4 className="text-sm font-bold uppercase tracking-[0.2em] text-cream mb-6">
               Contact Us
             </h4>
-            <div className="space-y-4 text-sm text-cream/70">
+            <div className="space-y-4 text-sm text-cream">
               <p>{siteConfig.address}</p>
               <p>
                 <a
@@ -104,7 +104,7 @@ export default function Footer() {
                   {siteConfig.email}
                 </a>
               </p>
-              <div className="pt-2 space-y-1 text-cream/50 text-xs">
+              <div className="pt-2 space-y-1 text-cream text-xs">
                 <p>{siteConfig.hours.weekdays}</p>
                 <p>{siteConfig.hours.saturday}</p>
                 <p>{siteConfig.hours.sunday}</p>
@@ -117,11 +117,11 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-cream/10">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-cream/40 text-xs text-center sm:text-left">
+          <p className="text-cream text-xs text-center sm:text-left">
             &copy; {new Date().getFullYear()} {siteConfig.businessName}. All
             rights reserved.
           </p>
-          <p className="text-cream/30 text-xs text-center sm:text-right">
+          <p className="text-cream text-xs text-center sm:text-right">
             Premium Decorative Concrete Stamping
           </p>
         </div>

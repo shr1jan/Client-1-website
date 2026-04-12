@@ -139,7 +139,7 @@ export default function ServicesPage() {
             ].map((item, i) => (
               <ScrollReveal key={item.step} delay={i * 150}>
                 <div className="text-center">
-                  <span className="text-5xl md:text-7xl font-black text-charcoal/10 block">
+                  <span className="text-5xl md:text-7xl font-black text-neutral-400 block">
                     {item.step}
                   </span>
                   <h3 className="text-lg md:text-xl font-bold text-charcoal uppercase tracking-wide mt-2">

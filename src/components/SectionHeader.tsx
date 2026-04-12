@@ -15,6 +15,8 @@ export default function SectionHeader({
   align = "left",
   className = "",
 }: SectionHeaderProps) {
+  const topClass = light ? "text-neutral-400" : "text-neutral-500";
+  const descClass = light ? "text-cream" : "text-warm-gray";
   const alignClass =
     align === "center"
       ? "text-center items-center"
@@ -33,9 +35,7 @@ export default function SectionHeader({
     <div className={`w-full flex flex-col ${alignClass} ${className}`}>
       <div className="leading-[0.85]">
         <span
-          className={`block text-5xl md:text-7xl lg:text-8xl font-black tracking-tight uppercase ${
-            light ? "text-cream/15" : "text-charcoal/8"
-          }`}
+          className={`block text-5xl md:text-7xl lg:text-8xl font-black tracking-tight uppercase ${topClass}`}
         >
           {topText}
         </span>
@@ -49,9 +49,7 @@ export default function SectionHeader({
       </div>
       {description && (
         <p
-          className={`mt-6 md:mt-8 text-base md:text-lg max-w-2xl leading-relaxed ${descAlign} ${
-            light ? "text-cream/70" : "text-warm-gray"
-          }`}
+          className={`mt-6 md:mt-8 text-base md:text-lg max-w-2xl leading-relaxed ${descAlign} ${descClass}`}
         >
           {description}
         </p>

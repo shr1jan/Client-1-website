@@ -36,7 +36,7 @@ export default function CTABanner({
         <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">
           {title}
         </h2>
-        <p className="mt-5 text-base md:text-lg text-white/80 max-w-2xl mx-auto">
+        <p className="mt-5 text-base md:text-lg text-white max-w-2xl mx-auto">
           {subtitle}
         </p>
         {isExternal ? (

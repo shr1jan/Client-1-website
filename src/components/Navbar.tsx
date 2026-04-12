@@ -72,7 +72,7 @@ export default function Navbar() {
             className={`text-base font-black uppercase tracking-widest transition-all duration-300 px-3 py-2 rounded-sm text-center ${
               isActive(link.href)
                 ? "text-terracotta"
-                : "text-cream/50 hover:text-cream"
+                : "text-cream hover:text-cream"
             }`}
           >
             {link.label}
@@ -136,7 +136,7 @@ export default function Navbar() {
                 className={`text-base uppercase tracking-[0.15em] transition-colors duration-300 font-medium ${
                   isActive(link.href)
                     ? "text-terracotta"
-                    : "text-cream/80 hover:text-terracotta"
+                    : "text-cream hover:text-terracotta"
                 }`}
               >
                 {link.label}

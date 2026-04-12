@@ -160,7 +160,7 @@ export default function AboutPage() {
               <ScrollReveal key={i} delay={i * 150}>
                 <div className="text-center group">
                   <div className="w-40 h-40 mx-auto rounded-full concrete-texture-light shadow-md group-hover:shadow-xl transition-shadow duration-500 flex items-center justify-center">
-                    <span className="text-4xl text-brown/40">&#9679;</span>
+                    <span className="text-4xl text-brown">&#9679;</span>
                   </div>
                   <h3 className="mt-6 text-lg font-bold text-charcoal uppercase tracking-wide">
                     {member.name}

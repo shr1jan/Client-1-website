@@ -62,7 +62,7 @@ export default function GalleryGrid() {
               <p className="text-cream font-bold text-sm uppercase tracking-wider">
                 {item.label}
               </p>
-              <p className="text-cream/60 text-xs mt-1">{item.category}</p>
+              <p className="text-cream text-xs mt-1">{item.category}</p>
             </div>
           </button>
         ))}
@@ -96,7 +96,7 @@ export default function GalleryGrid() {
               <p className="text-cream font-bold text-xl uppercase tracking-wider">
                 {lightbox.label}
               </p>
-              <p className="text-cream/60 text-sm mt-1">
+              <p className="text-cream text-sm mt-1">
                 {lightbox.category}
               </p>
             </div>

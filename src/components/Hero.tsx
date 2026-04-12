@@ -33,7 +33,7 @@ export default function Hero() {
           <br />
           Surfaces
         </h1>
-        <p className="mt-10 text-base md:text-lg text-cream/60 max-w-xl mx-auto leading-relaxed">
+        <p className="mt-10 text-base md:text-lg text-cream max-w-xl mx-auto leading-relaxed">
           {siteConfig.description}
         </p>
         <div className="mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center">
@@ -56,14 +56,14 @@ export default function Hero() {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
         {/* Desktop */}
         <div className="hidden md:flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-cream/40 text-xs uppercase tracking-[0.2em] font-medium">Scroll</span>
+          <span className="text-cream text-xs uppercase tracking-[0.2em] font-medium">Scroll</span>
           <div className="w-5 h-8 rounded-full border-2 border-cream/30 flex justify-center pt-1.5">
             <div className="w-1 h-2 rounded-full bg-cream/50 animate-[scrollDot_1.5s_ease-in-out_infinite]" />
           </div>
         </div>
         {/* Mobile: stroke finger swipe up */}
         <div className="flex md:hidden flex-col items-center gap-2 animate-[swipeUp_1.5s_ease-in-out_infinite]">
-          <span className="text-cream/40 text-[10px] uppercase tracking-[0.2em] font-medium">Swipe</span>
+          <span className="text-cream text-[10px] uppercase tracking-[0.2em] font-medium">Swipe</span>
           <svg width="20" height="28" viewBox="0 0 20 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 8V2M10 2L7 5M10 2l3 3" stroke="rgba(255,248,240,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             <circle cx="10" cy="17" r="7" stroke="rgba(255,248,240,0.3)" strokeWidth="1.5"/>
