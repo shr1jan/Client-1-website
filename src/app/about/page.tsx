@@ -1,4 +1,5 @@
 import SectionHeader from "@/components/SectionHeader";
+import PageHero from "@/components/PageHero";
 import StatsCounter from "@/components/StatsCounter";
 import CTABanner from "@/components/CTABanner";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -57,22 +58,20 @@ export default function AboutPage() {
   return (
     <>
       {/* Page hero -- left aligned */}
-      <section className="pt-40 pb-20 md:pt-48 md:pb-24 bg-slate">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionHeader
-            topText="About"
-            bottomText="Us"
-            description="The story, people, and values behind every surface we craft."
-            light
-            align="left"
-          />
-        </div>
-      </section>
+      <PageHero>
+        <SectionHeader
+          topText="About"
+          bottomText="Us"
+          description="The story, people, and values behind every surface we craft."
+          light
+          align="left"
+        />
+      </PageHero>
 
       <Marquee text="PASSION FOR PERFECTION" />
 
       {/* Story -- image left, text right (inherently mixed) */}
-      <section className="py-24 md:py-36 bg-cream">
+      <section className="py-12 md:py-18 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
             <ScrollReveal direction="left">
@@ -84,7 +83,7 @@ export default function AboutPage() {
                   topText="Our"
                   bottomText="Story"
                   align="left"
-                  className="mb-8"
+                  className="mb-4"
                 />
                 <div className="space-y-5 text-warm-gray leading-relaxed">
                   <p>
@@ -116,7 +115,7 @@ export default function AboutPage() {
       <StatsCounter stats={stats} />
 
       {/* Values -- right aligned header */}
-      <section className="py-24 md:py-36 bg-cream-dark">
+      <section className="py-12 md:py-18 bg-cream-dark">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
@@ -124,7 +123,7 @@ export default function AboutPage() {
               bottomText="Values"
               description="The principles that guide every project we undertake."
               align="right"
-              className="mb-16 md:mb-20"
+              className="mb-8 md:mb-10"
             />
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
@@ -145,7 +144,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team -- centered */}
-      <section className="py-24 md:py-36 bg-cream">
+      <section className="py-12 md:py-18 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
@@ -153,7 +152,7 @@ export default function AboutPage() {
               bottomText="The Team"
               description="The skilled professionals who bring your vision to life."
               align="center"
-              className="mb-16 md:mb-20"
+              className="mb-8 md:mb-10"
             />
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">

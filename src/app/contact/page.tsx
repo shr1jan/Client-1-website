@@ -1,4 +1,5 @@
 import SectionHeader from "@/components/SectionHeader";
+import PageHero from "@/components/PageHero";
 import ContactForm from "@/components/ContactForm";
 import CTABanner from "@/components/CTABanner";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -9,22 +10,20 @@ export default function ContactPage() {
   return (
     <>
       {/* Page hero */}
-      <section className="pt-40 pb-20 md:pt-48 md:pb-24 bg-slate">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionHeader
-            topText="Get In"
-            bottomText="Touch"
-            description="Ready to transform your space? Reach out for a free consultation and quote."
-            light
-            align="center"
-          />
-        </div>
-      </section>
+      <PageHero>
+        <SectionHeader
+          topText="Get In"
+          bottomText="Touch"
+          description="Ready to transform your space? Reach out for a free consultation and quote."
+          light
+          align="center"
+        />
+      </PageHero>
 
       <Marquee text="FREE ESTIMATES & CONSULTATIONS" />
 
       {/* Contact section */}
-      <section className="py-24 md:py-36 bg-cream">
+      <section className="py-12 md:py-18 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 md:gap-20">
             {/* Form */}

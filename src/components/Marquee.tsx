@@ -17,7 +17,7 @@ export default function Marquee({
 
   return (
     <div
-      className={`overflow-hidden whitespace-nowrap bg-charcoal text-cream py-5 md:py-6 select-none ${className}`}
+      className={`overflow-hidden whitespace-nowrap bg-charcoal text-cream py-2.5 md:py-3 select-none ${className}`}
     >
       <div className="animate-marquee inline-block will-change-transform">
         <span className="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase">

@@ -1,3 +1,5 @@
+import { Brain, Dumbbell, Wrench } from "lucide-react";
+
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
@@ -9,21 +11,30 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { siteConfig } from "@/config/siteConfig";
 import Link from "next/link";
 
+const featureIconClass =
+  "w-10 h-10 md:w-12 md:h-12 text-terracotta shrink-0";
+
 const features = [
   {
-    icon: "◆",
+    icon: (
+      <Brain className={featureIconClass} strokeWidth={1.5} aria-hidden />
+    ),
     title: "Expert Craftsmanship",
     description:
       "Our skilled artisans bring decades of experience to every project, ensuring precision and artistry in every stamp.",
   },
   {
-    icon: "◈",
+    icon: (
+      <Wrench className={featureIconClass} strokeWidth={1.5} aria-hidden />
+    ),
     title: "Custom Designs",
     description:
       "Choose from dozens of patterns and unlimited color combinations to create a surface uniquely yours.",
   },
   {
-    icon: "◇",
+    icon: (
+      <Dumbbell className={featureIconClass} strokeWidth={1.5} aria-hidden />
+    ),
     title: "Built to Last",
     description:
       "Our stamped concrete is sealed and reinforced for decades of beauty, standing up to weather and heavy use.",
@@ -52,7 +63,7 @@ export default function Home() {
       <Marquee text={siteConfig.businessName.toUpperCase()} />
 
       {/* Why Choose Us -- centered */}
-      <section className="py-24 md:py-36 bg-cream">
+      <section className="py-12 md:py-18 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
@@ -60,7 +71,7 @@ export default function Home() {
               bottomText="Choose Us"
               description="We combine artistry with engineering to deliver surfaces that are as durable as they are beautiful."
               align="center"
-              className="mb-16 md:mb-20"
+              className="mb-8 md:mb-10"
             />
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
@@ -74,7 +85,7 @@ export default function Home() {
       </section>
 
       {/* Services Preview -- right aligned header */}
-      <section className="py-24 md:py-36 bg-cream-dark">
+      <section className="py-12 md:py-18 bg-cream-dark">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
@@ -82,7 +93,7 @@ export default function Home() {
               bottomText="Services"
               description="From patios to pool decks, we transform any surface into a work of art."
               align="right"
-              className="mb-16 md:mb-20"
+              className="mb-8 md:mb-10"
             />
           </ScrollReveal>
           <ScrollReveal delay={100}>
@@ -120,7 +131,7 @@ export default function Home() {
       <StatsCounter stats={stats} />
 
       {/* Testimonials -- left aligned header */}
-      <section className="py-24 md:py-36 bg-cream">
+      <section className="py-12 md:py-18 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
@@ -128,7 +139,7 @@ export default function Home() {
               bottomText="Clients Say"
               description="Don't just take our word for it -- hear from homeowners and businesses who love their new surfaces."
               align="left"
-              className="mb-16 md:mb-20"
+              className="mb-8 md:mb-10"
             />
           </ScrollReveal>
           <ScrollReveal delay={150}>

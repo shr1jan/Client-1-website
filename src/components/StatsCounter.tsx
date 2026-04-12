@@ -77,7 +77,7 @@ export default function StatsCounter({ stats }: StatsCounterProps) {
   }, []);
 
   return (
-    <section className="bg-slate py-24 md:py-32">
+    <section className="bg-slate py-12 md:py-16">
       <div
         ref={ref}
         className="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16"

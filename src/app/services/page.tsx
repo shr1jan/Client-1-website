@@ -1,43 +1,44 @@
 import SectionHeader from "@/components/SectionHeader";
+import PageHero from "@/components/PageHero";
 import ServiceCard from "@/components/ServiceCard";
 import DesignShowcase from "@/components/DesignShowcase";
 import CTABanner from "@/components/CTABanner";
 import ScrollReveal from "@/components/ScrollReveal";
 import Marquee from "@/components/Marquee";
 
+/** Stamp design pattern photos in `public/assets/`. */
+const stampPatternImages = Array.from({ length: 10 }, (_, i) => ({
+  src: `/assets/${i + 1}.png`,
+  label: `Pattern ${i + 1}`,
+}));
+
 const services = [
   {
-    icon: "⬡",
     title: "Stamped Concrete Patios",
     description:
       "Create a stunning outdoor living space with custom stamped concrete patios. Choose from dozens of patterns including natural stone, slate, brick, and tile designs that transform your backyard into a retreat.",
   },
   {
-    icon: "⬢",
     title: "Driveways & Walkways",
     description:
       "Make a lasting first impression with a beautifully stamped driveway or walkway. Our durable finishes withstand heavy traffic while maintaining their elegant appearance for years to come.",
   },
   {
-    icon: "◎",
     title: "Pool Decks",
     description:
       "Enhance your pool area with slip-resistant stamped concrete that looks like natural stone or pavers. Cool-touch finishes and custom drainage solutions included in every pool deck project.",
   },
   {
-    icon: "▣",
     title: "Interior Floors",
     description:
       "Bring the beauty of stamped concrete indoors. Perfect for basements, sunrooms, kitchens, and commercial spaces. Our interior finishes are polished, sealed, and easy to maintain.",
   },
   {
-    icon: "◈",
     title: "Concrete Resurfacing",
     description:
       "Revive existing concrete surfaces with our resurfacing process. We overlay worn or damaged concrete with a fresh stamped finish — a cost-effective alternative to full replacement.",
   },
   {
-    icon: "◇",
     title: "Custom Patterns & Colors",
     description:
       "Can't find the perfect match? We create custom stamp patterns and color blends tailored to your vision. From rustic aged stone to modern geometric designs, the possibilities are limitless.",
@@ -48,25 +49,23 @@ export default function ServicesPage() {
   return (
     <>
       {/* Page hero -- centered */}
-      <section className="pt-40 pb-20 md:pt-48 md:pb-24 bg-slate">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionHeader
-            topText="Our"
-            bottomText="Services"
-            description="From elegant patios to durable driveways, we specialize in every form of decorative stamped concrete."
-            light
-            align="center"
-          />
-        </div>
-      </section>
+      <PageHero>
+        <SectionHeader
+          topText="Our"
+          bottomText="Services"
+          description="From elegant patios to durable driveways, we specialize in every form of decorative stamped concrete."
+          light
+          align="center"
+        />
+      </PageHero>
 
       <Marquee text="STAMPED CONCRETE EXPERTS" />
 
       {/* Design Showcase -- centered */}
-      <section className="py-24 md:py-36 bg-cream">
+      <section className="py-12 md:py-18 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-black text-charcoal uppercase tracking-tight">
                 Stamp Design Patterns
               </h2>
@@ -76,13 +75,13 @@ export default function ServicesPage() {
             </div>
           </ScrollReveal>
           <ScrollReveal delay={200}>
-            <DesignShowcase />
+            <DesignShowcase images={stampPatternImages} columns={3} />
           </ScrollReveal>
         </div>
       </section>
 
       {/* Services Grid -- left aligned header */}
-      <section className="py-24 md:py-36 bg-cream-dark">
+      <section className="py-12 md:py-18 bg-cream-dark">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
@@ -90,13 +89,13 @@ export default function ServicesPage() {
               bottomText="We Do"
               description="Comprehensive stamped concrete services for residential and commercial projects."
               align="left"
-              className="mb-16 md:mb-20"
+              className="mb-8 md:mb-10"
             />
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-start">
             {services.map((service, i) => (
               <ScrollReveal key={service.title} delay={i * 100}>
-                <ServiceCard {...service} />
+                <ServiceCard {...service} compact />
               </ScrollReveal>
             ))}
           </div>
@@ -104,7 +103,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Process -- right aligned header, centered steps */}
-      <section className="py-24 md:py-36 bg-cream">
+      <section className="py-12 md:py-18 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
@@ -112,7 +111,7 @@ export default function ServicesPage() {
               bottomText="Process"
               description="A seamless journey from your first call to your finished surface."
               align="right"
-              className="mb-16 md:mb-20"
+              className="mb-8 md:mb-10"
             />
           </ScrollReveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">

@@ -4,9 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 interface DesignShowcaseProps {
   images?: { src: string; label: string }[];
-  gridSize?: number;
   intervalMs?: number;
+  /** Three side-by-side panes showing consecutive patterns (no duplicates). Needs at least 3 images. */
+  columns?: 1 | 3;
 }
+
+const TRANSITION_MS = 700;
 
 const defaultDesigns = [
   { src: "", label: "Ashlar Slate" },
@@ -24,39 +27,106 @@ const textureGradients = [
   "linear-gradient(135deg, #6B5740 0%, #8B7355 25%, #4A3C2D 50%, #A0845C 75%, #6B5740 100%)",
 ];
 
+function paneIndex(base: number, col: number, len: number) {
+  return ((base + col) % len + len) % len;
+}
+
+/** Indices shown when the left column starts at `base`. */
+function indicesForBase(base: number, len: number, paneCount: number): Set<number> {
+  const s = new Set<number>();
+  for (let c = 0; c < paneCount; c++) {
+    s.add(paneIndex(base, c, len));
+  }
+  return s;
+}
+
+/** True if the two panes sets share no design (next slide never repeats any current image). */
+function basesDisjoint(
+  baseA: number,
+  baseB: number,
+  len: number,
+  paneCount: number
+): boolean {
+  const a = indicesForBase(baseA, len, paneCount);
+  const b = indicesForBase(baseB, len, paneCount);
+  for (const x of b) {
+    if (a.has(x)) return false;
+  }
+  return true;
+}
+
+/** Smallest positive offset from `fromBase` whose triple is disjoint (auto-advance). */
+function findNextDisjointBase(
+  fromBase: number,
+  len: number,
+  paneCount: number
+): number | null {
+  for (let offset = 1; offset < len; offset++) {
+    const candidate = (fromBase + offset) % len;
+    if (basesDisjoint(fromBase, candidate, len, paneCount)) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
+/** First disjoint base scanning from `preferred` (dot clicks). */
+function findDisjointBasePreferring(
+  fromBase: number,
+  preferred: number,
+  len: number,
+  paneCount: number
+): number {
+  const start = ((preferred % len) + len) % len;
+  for (let i = 0; i < len; i++) {
+    const candidate = (start + i) % len;
+    if (basesDisjoint(fromBase, candidate, len, paneCount)) {
+      return candidate;
+    }
+  }
+  return (fromBase + 1) % len;
+}
+
 export default function DesignShowcase({
   images,
-  gridSize: rawGridSize = 16,
   intervalMs = 4000,
+  columns = 1,
 }: DesignShowcaseProps) {
-  const gridSize = Math.max(rawGridSize, 2);
   const designs = images && images.length > 0 ? images : defaultDesigns;
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(1);
+  const len = designs.length;
+  const paneCount =
+    columns === 3 && len >= 3 ? 3 : 1;
+
+  const [baseIndex, setBaseIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
+  const [fromBase, setFromBase] = useState(0);
+  const [toBase, setToBase] = useState(0);
   const transitionTimeout = useRef<ReturnType<typeof setTimeout>>(null);
 
-  const maxDiag = gridSize - 1 + (gridSize - 1);
-
   const doTransition = useCallback(
-    (to: number) => {
+    (targetBase: number) => {
       if (transitioning) return;
-      setNextIndex(to);
+      const normalized = ((targetBase % len) + len) % len;
+      if (normalized === baseIndex) return;
+      setFromBase(baseIndex);
+      setToBase(normalized);
       setTransitioning(true);
 
       if (transitionTimeout.current) clearTimeout(transitionTimeout.current);
       transitionTimeout.current = setTimeout(() => {
-        setCurrentIndex(to);
+        setBaseIndex(normalized);
         setTransitioning(false);
-      }, maxDiag * 30 + 500);
+      }, TRANSITION_MS);
     },
-    [transitioning, maxDiag]
+    [transitioning, baseIndex, len]
   );
 
   const startTransition = useCallback(() => {
-    const next = (currentIndex + 1) % designs.length;
-    doTransition(next);
-  }, [currentIndex, designs.length, doTransition]);
+    const next =
+      findNextDisjointBase(baseIndex, len, paneCount) ??
+      (baseIndex + 1) % len;
+    if (next !== baseIndex) doTransition(next);
+  }, [baseIndex, len, paneCount, doTransition]);
 
   useEffect(() => {
     const timer = setInterval(startTransition, intervalMs);
@@ -77,93 +147,92 @@ export default function DesignShowcase({
     return textureGradients[index % textureGradients.length];
   };
 
+  const cols = Array.from({ length: paneCount }, (_, i) => i);
+
+  const paneClass =
+    paneCount === 3
+      ? "relative aspect-square w-[min(92vw,360px)] sm:w-[340px] md:w-[300px] lg:w-[340px] xl:w-[380px]"
+      : "relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px]";
+
   return (
-    <div className="flex flex-col items-center">
-      <div className="relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px] overflow-hidden rounded-sm shadow-2xl">
-        <div
-          className="absolute inset-0 grid"
-          style={{
-            gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-            gridTemplateRows: `repeat(${gridSize}, 1fr)`,
-          }}
-        >
-          {Array.from({ length: gridSize * gridSize }).map((_, i) => {
-            const row = Math.floor(i / gridSize);
-            const col = i % gridSize;
-            const diag = gridSize - 1 - col + row;
-            const delay = diag * 30;
-            const colPct = (col / (gridSize - 1)) * 100;
-            const rowPct = (row / (gridSize - 1)) * 100;
+    <div className="flex flex-col items-center w-full">
+      <div
+        className={
+          paneCount === 3
+            ? "flex flex-col items-center gap-10 md:flex-row md:flex-wrap md:justify-center md:items-start md:gap-6 lg:gap-8 w-full"
+            : "flex flex-col items-center"
+        }
+      >
+        {cols.map((col) => {
+          const settledIdx = paneIndex(baseIndex, col, len);
+          const fromIdx = paneIndex(fromBase, col, len);
+          const toIdx = paneIndex(toBase, col, len);
+          const showIdx = transitioning ? toIdx : settledIdx;
+          const label = designs[showIdx].label;
+          const backIdx = transitioning ? fromIdx : settledIdx;
+          const frontIdx = transitioning ? toIdx : settledIdx;
 
-            return (
+          return (
+            <div
+              key={col}
+              className={`${paneClass} overflow-hidden rounded-sm shadow-2xl shrink-0`}
+            >
               <div
-                key={i}
-                className="relative overflow-hidden"
-                style={{ clipPath: "circle(55%)" }}
-              >
-                <div
-                  className="absolute inset-0 transition-opacity"
-                  style={{
-                    backgroundImage: getBackground(currentIndex),
-                    backgroundSize: `${gridSize * 100}% ${gridSize * 100}%`,
-                    backgroundPosition: `${colPct}% ${rowPct}%`,
-                    backgroundRepeat: "no-repeat",
-                    opacity: transitioning ? 0 : 1,
-                    transitionDuration: "400ms",
-                    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-                    transitionDelay: transitioning ? `${delay}ms` : "0ms",
-                  }}
-                />
-                <div
-                  className="absolute inset-0 transition-opacity"
-                  style={{
-                    backgroundImage: getBackground(nextIndex),
-                    backgroundSize: `${gridSize * 100}% ${gridSize * 100}%`,
-                    backgroundPosition: `${colPct}% ${rowPct}%`,
-                    backgroundRepeat: "no-repeat",
-                    opacity: transitioning ? 1 : 0,
-                    transitionDuration: "400ms",
-                    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-                    transitionDelay: transitioning ? `${delay}ms` : "0ms",
-                  }}
-                />
-                <div
-                  className="absolute inset-0 transition-transform"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)",
-                    transform: transitioning ? "scale(1)" : "scale(0)",
-                    transitionDuration: "500ms",
-                    transitionDelay: transitioning ? `${delay}ms` : "0ms",
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
+                className="absolute inset-0 bg-cover bg-center transition-opacity ease-out"
+                style={{
+                  backgroundImage: getBackground(backIdx),
+                  opacity: transitioning ? 0 : 1,
+                  transitionDuration: `${TRANSITION_MS}ms`,
+                }}
+              />
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-opacity ease-out pointer-events-none"
+                style={{
+                  backgroundImage: getBackground(frontIdx),
+                  opacity: transitioning ? 1 : 0,
+                  transitionDuration: `${TRANSITION_MS}ms`,
+                }}
+              />
 
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/80 to-transparent p-6 pointer-events-none">
-          <p className="text-cream text-lg md:text-xl font-bold uppercase tracking-wider">
-            {designs[transitioning ? nextIndex : currentIndex].label}
-          </p>
-        </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/80 to-transparent p-4 md:p-5 pointer-events-none">
+                <p className="text-cream text-base md:text-lg font-bold uppercase tracking-wider">
+                  {label}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      <div className="flex gap-3 mt-6" role="tablist" aria-label="Design patterns">
+      <div
+        className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 max-w-3xl"
+        role="tablist"
+        aria-label="Design patterns"
+      >
         {designs.map((design, i) => (
           <button
             key={i}
             onClick={() => {
-              if (i !== currentIndex) doTransition(i);
+              const target = findDisjointBasePreferring(
+                baseIndex,
+                i,
+                len,
+                paneCount
+              );
+              if (target !== baseIndex) doTransition(target);
             }}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              i === (transitioning ? nextIndex : currentIndex)
+            className={`w-3 h-3 rounded-full transition-all duration-300 shrink-0 ${
+              i === (transitioning ? toBase : baseIndex)
                 ? "bg-terracotta scale-125"
                 : "bg-brown/30 hover:bg-brown/50"
             }`}
             role="tab"
-            aria-selected={i === (transitioning ? nextIndex : currentIndex)}
-            aria-label={`Show ${design.label} pattern`}
+            aria-selected={i === (transitioning ? toBase : baseIndex)}
+            aria-label={
+              paneCount === 3
+                ? `Show patterns starting with ${design.label}`
+                : `Show ${design.label} pattern`
+            }
           />
         ))}
       </div>

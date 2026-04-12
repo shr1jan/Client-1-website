@@ -32,7 +32,7 @@ export default function CTABanner({
           }}
         />
       </div>
-      <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-28 text-center">
+      <div className="relative max-w-7xl mx-auto px-6 py-10 md:py-14 text-center">
         <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">
           {title}
         </h2>

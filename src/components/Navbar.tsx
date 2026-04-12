@@ -26,7 +26,7 @@ export default function Navbar() {
       return;
     }
     const handleScroll = () => {
-      setPastHero(window.scrollY > window.innerHeight * 0.8);
+      setPastHero(window.scrollY > window.innerHeight * 0.1);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });

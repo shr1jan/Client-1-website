@@ -1,4 +1,5 @@
 import SectionHeader from "@/components/SectionHeader";
+import PageHero from "@/components/PageHero";
 import GalleryGrid from "@/components/GalleryGrid";
 import CTABanner from "@/components/CTABanner";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -8,22 +9,20 @@ export default function GalleryPage() {
   return (
     <>
       {/* Page hero -- right aligned */}
-      <section className="pt-40 pb-20 md:pt-48 md:pb-24 bg-slate">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionHeader
-            topText="Our"
-            bottomText="Gallery"
-            description="Browse our portfolio of completed projects and see the quality of our craftsmanship firsthand."
-            light
-            align="right"
-          />
-        </div>
-      </section>
+      <PageHero>
+        <SectionHeader
+          topText="Our"
+          bottomText="Gallery"
+          description="Browse our portfolio of completed projects and see the quality of our craftsmanship firsthand."
+          light
+          align="right"
+        />
+      </PageHero>
 
       <Marquee text="CRAFTSMANSHIP IN EVERY DETAIL" />
 
-      {/* Gallery -- centered filters */}
-      <section className="py-24 md:py-36 bg-cream">
+      {/* Gallery */}
+      <section className="py-12 md:py-18 bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <GalleryGrid />
@@ -32,7 +31,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Note -- centered */}
-      <section className="py-20 md:py-24 bg-cream-dark">
+      <section className="py-10 md:py-12 bg-cream-dark">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <ScrollReveal>
             <p className="text-warm-gray text-lg leading-relaxed">

@@ -9,15 +9,6 @@ interface GalleryItem {
   gradient: string;
 }
 
-const categories = [
-  "All",
-  "Patios",
-  "Driveways",
-  "Pool Decks",
-  "Interiors",
-  "Walkways",
-];
-
 const galleryItems: GalleryItem[] = [
   { id: 1, category: "Patios", label: "Ashlar Slate Patio", gradient: "linear-gradient(135deg, #A0845C, #C4A97D, #8B7355)" },
   { id: 2, category: "Patios", label: "Flagstone Patio", gradient: "linear-gradient(135deg, #7A6347, #A88B6A, #6B5740)" },
@@ -34,7 +25,6 @@ const galleryItems: GalleryItem[] = [
 ];
 
 export default function GalleryGrid() {
-  const [filter, setFilter] = useState("All");
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
 
   useEffect(() => {
@@ -46,33 +36,10 @@ export default function GalleryGrid() {
     return () => document.removeEventListener("keydown", handleKey);
   }, [lightbox]);
 
-  const filtered =
-    filter === "All"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === filter);
-
   return (
     <>
-      {/* Filter buttons */}
-      <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-10">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setFilter(cat)}
-            className={`px-5 py-2 text-sm font-semibold uppercase tracking-wider rounded-sm transition-all duration-300 ${
-              filter === cat
-                ? "bg-terracotta text-white"
-                : "bg-white text-warm-gray border border-tan/30 hover:border-terracotta/50 hover:text-terracotta"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-        {filtered.map((item, i) => (
+        {galleryItems.map((item, i) => (
           <button
             key={item.id}
             onClick={() => setLightbox(item)}
