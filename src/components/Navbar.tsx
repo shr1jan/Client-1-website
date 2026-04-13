@@ -55,36 +55,38 @@ export default function Navbar() {
     <>
       {/* Desktop: fixed right sidebar */}
       <aside
-        className={`hidden lg:flex fixed top-0 right-0 h-screen w-44 z-50 flex-col items-center justify-evenly backdrop-blur-md transition-transform duration-500 ${pastHero ? "translate-x-0" : "translate-x-full"}`}
+        className={`hidden lg:flex fixed top-0 right-0 h-screen w-52 z-50 flex-col backdrop-blur-md transition-transform duration-500 ${pastHero ? "translate-x-0" : "translate-x-full"}`}
         style={{ background: "linear-gradient(90deg, transparent 0%, var(--color-slate) 12%)", fontFamily: "'Courages', sans-serif" }}
       >
-        <Link
-          href="/"
-          className="text-cream font-black text-2xl uppercase tracking-widest"
-        >
-          {siteConfig.businessName.split(" ").map(w => w[0]).join("")}
-        </Link>
-
-        {navLinks.map((link) => (
+        <div className="flex h-full w-44 flex-col items-center justify-evenly ml-auto">
           <Link
-            key={link.href}
-            href={link.href}
-            className={`text-base font-black uppercase tracking-widest transition-all duration-300 px-3 py-2 rounded-sm text-center ${
-              isActive(link.href)
-                ? "text-terracotta"
-                : "text-cream hover:text-cream"
-            }`}
+            href="/"
+            className="text-cream font-black text-2xl uppercase tracking-widest"
           >
-            {link.label}
+            {siteConfig.businessName.split(" ").map(w => w[0]).join("")}
           </Link>
-        ))}
 
-        <Link
-          href="/contact"
-          className="px-5 py-3 bg-terracotta text-white text-sm font-black uppercase tracking-widest rounded-sm hover:bg-terracotta-dark transition-colors duration-300 text-center"
-        >
-          Quote
-        </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-base font-black uppercase tracking-widest transition-all duration-300 px-3 py-2 rounded-sm text-center ${
+                isActive(link.href)
+                  ? "text-terracotta"
+                  : "text-cream hover:text-cream"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          <Link
+            href="/contact"
+            className="px-5 py-3 bg-terracotta text-white text-sm font-black uppercase tracking-widest rounded-sm hover:bg-terracotta-dark transition-colors duration-300 text-center"
+          >
+            Quote
+          </Link>
+        </div>
       </aside>
 
       {/* Mobile: top bar + hamburger */}

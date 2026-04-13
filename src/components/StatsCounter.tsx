@@ -48,7 +48,7 @@ function AnimatedNumber({
   return (
     <span className="text-4xl md:text-5xl lg:text-6xl font-black text-terracotta">
       {prefix}
-      {display.toLocaleString()}
+      {display.toLocaleString("en-US")}
       {suffix}
     </span>
   );
