@@ -55,8 +55,8 @@ export default function Navbar() {
     <>
       {/* Desktop: fixed right sidebar */}
       <aside
-        className={`hidden lg:flex fixed top-0 right-0 h-screen w-52 z-50 flex-col backdrop-blur-md transition-transform duration-500 ${pastHero ? "translate-x-0" : "translate-x-full"}`}
-        style={{ background: "linear-gradient(90deg, transparent 0%, var(--color-slate) 12%)", fontFamily: "'Courages', sans-serif" }}
+        className={`hidden lg:flex fixed top-0 right-0 h-screen w-44 z-50 flex-col bg-slate transition-transform duration-500 ${pastHero ? "translate-x-0" : "translate-x-full"}`}
+        style={{ fontFamily: "'Courages', sans-serif" }}
       >
         <div className="flex h-full w-44 flex-col items-center justify-evenly ml-auto">
           <Link

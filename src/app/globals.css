@@ -48,7 +48,7 @@ html {
   @media (min-width: 64rem) {
     main > *,
     footer {
-      padding-right: 13rem;
+      padding-right: 11rem;
     }
     main > .no-sidebar-offset {
       padding-right: 0;

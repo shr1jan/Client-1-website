@@ -49,6 +49,14 @@ const servicePreview = [
   { icon: "◈", title: "Resurfacing", href: "/services" },
 ];
 
+/**
+ * Flex + wrap + justify-center centers any short last row (1 item, 2 items, …)
+ * for any number of services. Widths match the container gaps: gap-6 (1.5rem)
+ * for 2- and 3-column layouts, md:gap-8 (2rem) for 5-column.
+ */
+const servicePreviewItemClass =
+  "group block shrink-0 w-[calc((100%-1.5rem)/2)] sm:w-[calc((100%-3rem)/3)] md:w-[calc((100%-8rem)/5)]";
+
 const stats = [
   { label: "Years Experience", value: siteConfig.stats.yearsInBusiness, suffix: "+" },
   { label: "Projects Completed", value: siteConfig.stats.projectsCompleted, suffix: "+" },
@@ -97,14 +105,14 @@ export default function Home() {
             />
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-8">
+            <div className="flex flex-wrap justify-center gap-6 md:gap-8">
               {servicePreview.map((service) => (
                 <Link
                   key={service.title}
                   href={service.href}
-                  className="group"
+                  className={servicePreviewItemClass}
                 >
-                  <div className="concrete-texture aspect-square rounded-sm flex items-center justify-center text-4xl md:text-5xl text-cream group-hover:scale-105 transition-transform duration-500 shadow-md">
+                  <div className="concrete-texture aspect-square w-full rounded-sm flex items-center justify-center text-4xl md:text-5xl text-cream group-hover:scale-105 transition-transform duration-500 shadow-md">
                     {service.icon}
                   </div>
                   <p className="mt-4 text-center font-bold text-charcoal uppercase tracking-wider text-xs md:text-sm group-hover:text-terracotta transition-colors">
