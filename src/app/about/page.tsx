@@ -8,19 +8,14 @@ import { siteConfig } from "@/config/siteConfig";
 
 const team = [
   {
-    name: "Team Member Name",
-    role: "Founder & Lead Designer",
-    bio: "With over 15 years in decorative concrete, our founder brings an artist's eye and an engineer's precision to every project.",
+    name: "Anush Bhattarai",
+    role: "Marketing Manager",
+    bio: "Leads client communication, brand outreach, and project coordination so every customer experience feels clear and responsive.",
   },
   {
-    name: "Team Member Name",
-    role: "Project Manager",
-    bio: "Ensures every project runs on time, on budget, and exceeds expectations. The bridge between our clients' vision and our crew's expertise.",
-  },
-  {
-    name: "Team Member Name",
-    role: "Lead Installer",
-    bio: "A master of stamping techniques with an incredible attention to detail. Responsible for the flawless finish on hundreds of projects.",
+    name: "Netra Bahadur Bhattarai",
+    role: "CEO",
+    bio: "Guides the company with hands-on industry knowledge, a focus on quality workmanship, and a commitment to dependable service.",
   },
 ];
 
@@ -155,7 +150,7 @@ export default function AboutPage() {
               className="mb-8 md:mb-10"
             />
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 max-w-4xl mx-auto">
             {team.map((member, i) => (
               <ScrollReveal key={i} delay={i * 150}>
                 <div className="text-center group">
