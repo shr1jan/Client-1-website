@@ -97,7 +97,6 @@ export default function Hero({ photos = [], initialPhotoIndex = 0 }: HeroProps) 
       <div className="absolute inset-0 bg-gradient-to-b from-charcoal/35 via-charcoal/20 to-charcoal/80" />
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/45 via-transparent to-charcoal/45" />
       <div className="absolute inset-0 opacity-10 mix-blend-soft-light bg-[radial-gradient(circle_at_20%_50%,rgba(198,123,79,0.7)_0%,transparent_45%),radial-gradient(circle_at_80%_20%,rgba(232,213,183,0.5)_0%,transparent_35%)]" />
-      <div className="absolute inset-0 opacity-[0.04] bg-[repeating-conic-gradient(rgba(255,255,255,0.7)_0%_25%,transparent_0%_50%)] bg-[length:60px_60px]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center py-32 md:py-40">
         <p className="text-terracotta text-xs md:text-sm font-semibold uppercase tracking-[0.3em] mb-8">

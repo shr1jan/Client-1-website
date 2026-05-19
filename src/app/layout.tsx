@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { siteConfig } from "@/config/siteConfig";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Premium Decorative Concrete Stamping",
-  description:
-    "Transform your outdoor and indoor spaces with stunning stamped concrete designs. Expert craftsmanship, lasting beauty.",
+  title: siteConfig.businessName,
+  description: siteConfig.description,
 };
 
 export const viewport: Viewport = {

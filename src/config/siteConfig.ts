@@ -1,5 +1,5 @@
 export const siteConfig = {
-  businessName: "Your Business Name",
+  businessName: "Decorative Stamp Concrete PVT. LTD.",
   tagline: "Premium Decorative Concrete Stamping",
   description:
     "Transform your outdoor and indoor spaces with stunning stamped concrete designs. Expert craftsmanship, lasting beauty.",
