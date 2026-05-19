@@ -1,31 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import type { GalleryPhoto } from "@/lib/supabasePhotos";
 
-interface GalleryItem {
-  id: number;
-  category: string;
-  label: string;
-  gradient: string;
+interface GalleryGridProps {
+  photos: GalleryPhoto[];
 }
 
-const galleryItems: GalleryItem[] = [
-  { id: 1, category: "Patios", label: "Ashlar Slate Patio", gradient: "linear-gradient(135deg, #A0845C, #C4A97D, #8B7355)" },
-  { id: 2, category: "Patios", label: "Flagstone Patio", gradient: "linear-gradient(135deg, #7A6347, #A88B6A, #6B5740)" },
-  { id: 3, category: "Driveways", label: "Cobblestone Driveway", gradient: "linear-gradient(135deg, #8B8B8B, #A8A8A8, #6B6B6B)" },
-  { id: 4, category: "Driveways", label: "Brick Pattern Driveway", gradient: "linear-gradient(135deg, #C67B4F, #D4956B, #A8603A)" },
-  { id: 5, category: "Pool Decks", label: "Travertine Pool Deck", gradient: "linear-gradient(135deg, #D2B48C, #E8D5B7, #C4A97D)" },
-  { id: 6, category: "Pool Decks", label: "Sandstone Pool Deck", gradient: "linear-gradient(135deg, #C4A97D, #A0845C, #E8D5B7)" },
-  { id: 7, category: "Interiors", label: "Wood Plank Interior", gradient: "linear-gradient(135deg, #6B5740, #8B7355, #4A3C2D)" },
-  { id: 8, category: "Interiors", label: "Marble Finish Floor", gradient: "linear-gradient(135deg, #E0E0E0, #F5F5F5, #C8C8C8)" },
-  { id: 9, category: "Walkways", label: "Herringbone Brick Path", gradient: "linear-gradient(135deg, #C67B4F, #A8603A, #D4956B)" },
-  { id: 10, category: "Patios", label: "Roman Slate Patio", gradient: "linear-gradient(135deg, #8B7355, #6B5740, #A0845C)" },
-  { id: 11, category: "Walkways", label: "Fieldstone Walkway", gradient: "linear-gradient(135deg, #7A6347, #C4A97D, #6B5740)" },
-  { id: 12, category: "Pool Decks", label: "Limestone Pool Deck", gradient: "linear-gradient(135deg, #D2B48C, #A0845C, #F5EDE0)" },
-];
-
-export default function GalleryGrid() {
-  const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
+export default function GalleryGrid({ photos }: GalleryGridProps) {
+  const [lightbox, setLightbox] = useState<GalleryPhoto | null>(null);
 
   useEffect(() => {
     if (!lightbox) return;
@@ -36,26 +20,39 @@ export default function GalleryGrid() {
     return () => document.removeEventListener("keydown", handleKey);
   }, [lightbox]);
 
+  if (!photos.length) {
+    return (
+      <div className="border border-warm-gray/20 bg-cream-dark/40 px-6 py-12 text-center">
+        <p className="text-charcoal font-bold uppercase tracking-wider">
+          No gallery photos found
+        </p>
+        <p className="text-warm-gray mt-3">
+          Add image files to the Supabase photos bucket and they will appear
+          here automatically.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-        {galleryItems.map((item, i) => (
+        {photos.map((item, i) => (
           <button
             key={item.id}
+            type="button"
             onClick={() => setLightbox(item)}
             className="group relative aspect-[4/3] rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer animate-[fadeInUp_0.4s_ease-out_both]"
             style={{ animationDelay: `${i * 60}ms` }}
+            aria-label={`View ${item.label}`}
           >
-            <div
-              className="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
-              style={{ background: item.gradient }}
-            />
-            <div
-              className="absolute inset-0 opacity-5"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(0,0,0,0.05) 8px, rgba(0,0,0,0.05) 16px)",
-              }}
+            <Image
+              src={item.src}
+              alt={item.alt}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+              priority={i < 3}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
@@ -81,16 +78,13 @@ export default function GalleryGrid() {
             className="relative max-w-3xl w-full aspect-[4/3] rounded-sm overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div
-              className="absolute inset-0"
-              style={{ background: lightbox.gradient }}
-            />
-            <div
-              className="absolute inset-0 opacity-5"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(0,0,0,0.05) 8px, rgba(0,0,0,0.05) 16px)",
-              }}
+            <Image
+              src={lightbox.src}
+              alt={lightbox.alt}
+              fill
+              sizes="(min-width: 768px) 768px, 100vw"
+              className="object-cover"
+              priority
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/80 to-transparent p-8">
               <p className="text-cream font-bold text-xl uppercase tracking-wider">
