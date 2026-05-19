@@ -22,8 +22,6 @@ const team = [
 const stats = [
   { label: "Years Experience", value: siteConfig.stats.yearsInBusiness, suffix: "+" },
   { label: "Projects Completed", value: siteConfig.stats.projectsCompleted, suffix: "+" },
-  { label: "Satisfied Clients", value: siteConfig.stats.satisfiedClients, suffix: "+" },
-  { label: "Design Patterns", value: siteConfig.stats.designPatterns, suffix: "+" },
 ];
 
 const values = [
