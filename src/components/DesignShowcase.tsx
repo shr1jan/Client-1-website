@@ -24,7 +24,7 @@ const defaultDesigns = [
 const textureGradients = [
   "linear-gradient(135deg, #A0845C 0%, #C4A97D 25%, #8B7355 50%, #D2B48C 75%, #A0845C 100%)",
   "linear-gradient(135deg, #7A6347 0%, #A88B6A 25%, #6B5740 50%, #C4A97D 75%, #7A6347 100%)",
-  "linear-gradient(135deg, #C67B4F 0%, #D4956B 25%, #A8603A 50%, #E8B090 75%, #C67B4F 100%)",
+  "linear-gradient(135deg, #39aa36 0%, #63c560 25%, #2e8f2b 50%, #98d996 75%, #39aa36 100%)",
   "linear-gradient(135deg, #8B8B8B 0%, #A8A8A8 25%, #6B6B6B 50%, #C8C8C8 75%, #8B8B8B 100%)",
   "linear-gradient(135deg, #6B5740 0%, #8B7355 25%, #4A3C2D 50%, #A0845C 75%, #6B5740 100%)",
 ];
