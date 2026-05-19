@@ -1,26 +1,103 @@
-import Link from "next/link";
-import { siteConfig } from "@/config/siteConfig";
+"use client";
 
-export default function Hero() {
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { siteConfig } from "@/config/siteConfig";
+import type { GalleryPhoto } from "@/lib/supabasePhotos";
+
+interface HeroProps {
+  photos?: GalleryPhoto[];
+  initialPhotoIndex?: number;
+}
+
+const ROTATION_MS = 6500;
+const FADE_MS = 1400;
+
+export default function Hero({ photos = [], initialPhotoIndex = 0 }: HeroProps) {
+  const normalizedInitialIndex = photos.length
+    ? Math.min(Math.max(initialPhotoIndex, 0), photos.length - 1)
+    : 0;
+  const [activeIndex, setActiveIndex] = useState(normalizedInitialIndex);
+  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
+  const activeIndexRef = useRef(normalizedInitialIndex);
+  const fadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (photos.length < 2) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      const currentIndex = activeIndexRef.current;
+      let nextIndex = currentIndex;
+
+      while (nextIndex === currentIndex) {
+        nextIndex = Math.floor(Math.random() * photos.length);
+      }
+
+      setPreviousIndex(currentIndex);
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+
+      if (fadeTimer.current) {
+        clearTimeout(fadeTimer.current);
+      }
+
+      fadeTimer.current = setTimeout(() => {
+        setPreviousIndex(null);
+      }, FADE_MS);
+    }, ROTATION_MS);
+
+    return () => {
+      clearInterval(interval);
+
+      if (fadeTimer.current) {
+        clearTimeout(fadeTimer.current);
+      }
+    };
+  }, [photos.length]);
+
+  const activePhoto = photos[activeIndex];
+  const previousPhoto =
+    previousIndex !== null ? photos[previousIndex] : undefined;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden no-sidebar-offset">
       {/* Background */}
       <div className="absolute inset-0 concrete-texture-dark" />
-      <div
-        className="absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 20% 50%, rgba(198,123,79,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(139,115,85,0.2) 0%, transparent 40%)",
-        }}
-      />
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage:
-            "repeating-conic-gradient(rgba(255,255,255,0.03) 0% 25%, transparent 0% 50%)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+
+      {previousPhoto && (
+        <Image
+          key={`previous-${previousPhoto.path}`}
+          src={previousPhoto.src}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover opacity-100 scale-105"
+          priority
+          aria-hidden
+        />
+      )}
+
+      {activePhoto && (
+        <Image
+          key={`active-${activePhoto.path}`}
+          src={activePhoto.src}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover scale-100 animate-[heroPhotoReveal_1400ms_ease-out_both]"
+          priority
+          aria-hidden
+        />
+      )}
+
+      <div className="absolute inset-0 bg-charcoal/65" />
+      <div className="absolute inset-0 bg-gradient-to-b from-charcoal/35 via-charcoal/20 to-charcoal/80" />
+      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/45 via-transparent to-charcoal/45" />
+      <div className="absolute inset-0 opacity-10 mix-blend-soft-light bg-[radial-gradient(circle_at_20%_50%,rgba(198,123,79,0.7)_0%,transparent_45%),radial-gradient(circle_at_80%_20%,rgba(232,213,183,0.5)_0%,transparent_35%)]" />
+      <div className="absolute inset-0 opacity-[0.04] bg-[repeating-conic-gradient(rgba(255,255,255,0.7)_0%_25%,transparent_0%_50%)] bg-[length:60px_60px]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center py-32 md:py-40">
         <p className="text-terracotta text-xs md:text-sm font-semibold uppercase tracking-[0.3em] mb-8">

@@ -161,6 +161,17 @@ body {
   }
 }
 
+@keyframes heroPhotoReveal {
+  from {
+    opacity: 0;
+    transform: scale(1.045);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Concrete texture gradient utility */
 .concrete-texture {
   background: linear-gradient(

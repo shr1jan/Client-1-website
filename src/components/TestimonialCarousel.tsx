@@ -4,27 +4,27 @@ import { useRef, useState, useEffect } from "react";
 
 const testimonials = [
   {
-    name: "John D.",
+    name: "Ramesh Shrestha",
     role: "Homeowner",
     text: "Absolutely transformed our backyard patio. The stamped concrete looks like real stone and everyone who visits compliments it. Professional team from start to finish.",
   },
   {
-    name: "Sarah M.",
+    name: "Sita Gurung",
     role: "Property Manager",
     text: "We hired them for a large commercial pool deck project. The quality of work exceeded our expectations and they finished ahead of schedule. Highly recommend.",
   },
   {
-    name: "Mike R.",
+    name: "Bikash Thapa",
     role: "Homeowner",
     text: "Our driveway went from plain gray concrete to a beautiful cobblestone pattern. The attention to detail in the coloring and texturing is remarkable.",
   },
   {
-    name: "Lisa K.",
+    name: "Anita Karki",
     role: "Business Owner",
     text: "They resurfaced our restaurant patio with a gorgeous slate pattern. Our customers love the new look. Great value for premium quality work.",
   },
   {
-    name: "David & Amy T.",
+    name: "Prakash and Maya Adhikari",
     role: "Homeowners",
     text: "From design consultation to final sealing, the entire process was seamless. Our new walkway and front entry are the highlight of our home's curb appeal.",
   },

@@ -1,4 +1,5 @@
 import { Brain, Dumbbell, Wrench } from "lucide-react";
+import { randomInt } from "crypto";
 
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
@@ -9,7 +10,9 @@ import TestimonialCarousel from "@/components/TestimonialCarousel";
 import CTABanner from "@/components/CTABanner";
 import ScrollReveal from "@/components/ScrollReveal";
 import { siteConfig } from "@/config/siteConfig";
+import { getGalleryPhotos } from "@/lib/supabasePhotos";
 import Link from "next/link";
+import { connection } from "next/server";
 
 const featureIconClass =
   "w-10 h-10 md:w-12 md:h-12 text-terracotta shrink-0";
@@ -64,10 +67,19 @@ const stats = [
   { label: "Design Patterns", value: siteConfig.stats.designPatterns, suffix: "+" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  await connection();
+  const heroPhotos = await getGalleryPhotos();
+  const initialHeroPhotoIndex = heroPhotos.length
+    ? randomInt(heroPhotos.length)
+    : 0;
+
   return (
     <>
-      <Hero />
+      <Hero
+        photos={heroPhotos}
+        initialPhotoIndex={initialHeroPhotoIndex}
+      />
       <Marquee text={siteConfig.businessName.toUpperCase()} />
 
       {/* Why Choose Us -- centered */}

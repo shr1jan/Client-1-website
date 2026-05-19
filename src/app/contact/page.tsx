@@ -91,13 +91,15 @@ export default function ContactPage() {
                     <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-charcoal mb-3">
                       Find Us
                     </h3>
-                    <div className="aspect-[4/3] rounded-sm concrete-texture-light flex items-center justify-center shadow-inner">
-                      <div className="text-center text-brown">
-                        <div className="text-4xl mb-2">&#9673;</div>
-                        <p className="text-sm font-medium uppercase tracking-wider">
-                          Map Placeholder
-                        </p>
-                      </div>
+                    <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-inner">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3532.9948006706804!2d85.27464727546662!3d27.686555576194493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjfCsDQxJzExLjYiTiA4NcKwMTYnMzguMCJF!5e0!3m2!1sen!2snp!4v1779176999647!5m2!1sen!2snp"
+                        className="h-full w-full border-0"
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Map to Saheed Basu Ismriti Marge, Kathmandu"
+                      />
                     </div>
                   </div>
                 </div>
