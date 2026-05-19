@@ -1,6 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-const PHOTOS_BUCKET = "photos";
 const IMAGE_EXTENSIONS = new Set([
   "avif",
   "gif",
@@ -25,6 +24,11 @@ export interface GalleryPhoto {
   label: string;
   category: string;
   path: string;
+}
+
+interface BucketImageOptions {
+  bucket: string;
+  defaultCategory: string;
 }
 
 function isImage(item: StorageItem) {
@@ -60,6 +64,7 @@ function categoryFromPath(path: string) {
 
 async function listPhotos(
   supabase: SupabaseClient,
+  { bucket, defaultCategory }: BucketImageOptions,
   folder = "",
 ): Promise<GalleryPhoto[]> {
   const photos: GalleryPhoto[] = [];
@@ -68,7 +73,7 @@ async function listPhotos(
 
   while (true) {
     const { data, error } = await supabase.storage
-      .from(PHOTOS_BUCKET)
+      .from(bucket)
       .list(folder, {
         limit,
         offset,
@@ -87,7 +92,13 @@ async function listPhotos(
       const path = folder ? `${folder}/${item.name}` : item.name;
 
       if (isFolder(item)) {
-        photos.push(...(await listPhotos(supabase, path)));
+        photos.push(
+          ...(await listPhotos(
+            supabase,
+            { bucket, defaultCategory },
+            path,
+          )),
+        );
         continue;
       }
 
@@ -96,7 +107,7 @@ async function listPhotos(
       }
 
       const { data: publicUrl } = supabase.storage
-        .from(PHOTOS_BUCKET)
+        .from(bucket)
         .getPublicUrl(path);
 
       photos.push({
@@ -104,7 +115,7 @@ async function listPhotos(
         src: publicUrl.publicUrl,
         alt: labelFromPath(path),
         label: labelFromPath(path),
-        category: categoryFromPath(path),
+        category: path.includes("/") ? categoryFromPath(path) : defaultCategory,
         path,
       });
     }
@@ -119,12 +130,12 @@ async function listPhotos(
   return photos;
 }
 
-export async function getGalleryPhotos() {
+async function getBucketImages(options: BucketImageOptions) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
   if (!supabaseUrl || !supabaseKey) {
-    console.warn("Supabase gallery credentials are missing.");
+    console.warn("Supabase storage credentials are missing.");
     return [];
   }
 
@@ -135,9 +146,23 @@ export async function getGalleryPhotos() {
   });
 
   try {
-    return await listPhotos(supabase);
+    return await listPhotos(supabase, options);
   } catch (error) {
-    console.error("Unable to load Supabase gallery photos:", error);
+    console.error(`Unable to load Supabase ${options.bucket} images:`, error);
     return [];
   }
+}
+
+export async function getGalleryPhotos() {
+  return getBucketImages({
+    bucket: "photos",
+    defaultCategory: "Project Photo",
+  });
+}
+
+export async function getDesignImages() {
+  return getBucketImages({
+    bucket: "designs",
+    defaultCategory: "Stamp Design",
+  });
 }

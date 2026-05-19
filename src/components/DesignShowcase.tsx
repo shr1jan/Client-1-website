@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface DesignShowcaseProps {
   images?: { src: string; label: string }[];
@@ -70,6 +72,21 @@ function findNextDisjointBase(
   return null;
 }
 
+/** Largest negative offset from `fromBase` whose panes are disjoint (previous arrow). */
+function findPreviousDisjointBase(
+  fromBase: number,
+  len: number,
+  paneCount: number
+): number | null {
+  for (let offset = 1; offset < len; offset++) {
+    const candidate = (fromBase - offset + len) % len;
+    if (basesDisjoint(fromBase, candidate, len, paneCount)) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
 /** First disjoint base scanning from `preferred` (dot clicks). */
 function findDisjointBasePreferring(
   fromBase: number,
@@ -128,6 +145,22 @@ export default function DesignShowcase({
     if (next !== baseIndex) doTransition(next);
   }, [baseIndex, len, paneCount, doTransition]);
 
+  const moveDesigns = useCallback(
+    (direction: "previous" | "next") => {
+      const next =
+        direction === "next"
+          ? findNextDisjointBase(baseIndex, len, paneCount)
+          : findPreviousDisjointBase(baseIndex, len, paneCount);
+      const fallback =
+        direction === "next"
+          ? (baseIndex + 1) % len
+          : (baseIndex - 1 + len) % len;
+
+      doTransition(next ?? fallback);
+    },
+    [baseIndex, len, paneCount, doTransition]
+  );
+
   useEffect(() => {
     const timer = setInterval(startTransition, intervalMs);
     return () => clearInterval(timer);
@@ -139,14 +172,6 @@ export default function DesignShowcase({
     };
   }, []);
 
-  const getBackground = (index: number) => {
-    const design = designs[index];
-    if (design.src) {
-      return `url(${design.src})`;
-    }
-    return textureGradients[index % textureGradients.length];
-  };
-
   const cols = Array.from({ length: paneCount }, (_, i) => i);
 
   const paneClass =
@@ -156,52 +181,119 @@ export default function DesignShowcase({
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div
-        className={
-          paneCount === 3
-            ? "flex flex-col items-center gap-10 md:flex-row md:flex-wrap md:justify-center md:items-start md:gap-6 lg:gap-8 w-full"
-            : "flex flex-col items-center"
-        }
-      >
-        {cols.map((col) => {
-          const settledIdx = paneIndex(baseIndex, col, len);
-          const fromIdx = paneIndex(fromBase, col, len);
-          const toIdx = paneIndex(toBase, col, len);
-          const showIdx = transitioning ? toIdx : settledIdx;
-          const label = designs[showIdx].label;
-          const backIdx = transitioning ? fromIdx : settledIdx;
-          const frontIdx = transitioning ? toIdx : settledIdx;
+      <div className="relative w-full">
+        <button
+          type="button"
+          onClick={() => moveDesigns("previous")}
+          className="absolute left-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-charcoal/80 text-cream shadow-lg transition-colors duration-300 hover:bg-terracotta disabled:opacity-40"
+          aria-label="Show previous design patterns"
+          disabled={len < 2}
+        >
+          <ChevronLeft className="h-5 w-5" aria-hidden />
+        </button>
 
-          return (
-            <div
-              key={col}
-              className={`${paneClass} overflow-hidden rounded-sm shadow-2xl shrink-0`}
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-opacity ease-out"
-                style={{
-                  backgroundImage: getBackground(backIdx),
-                  opacity: transitioning ? 0 : 1,
-                  transitionDuration: `${TRANSITION_MS}ms`,
-                }}
-              />
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-opacity ease-out pointer-events-none"
-                style={{
-                  backgroundImage: getBackground(frontIdx),
-                  opacity: transitioning ? 1 : 0,
-                  transitionDuration: `${TRANSITION_MS}ms`,
-                }}
-              />
+        <div
+          className={
+            paneCount === 3
+              ? "flex flex-col items-center gap-10 px-14 md:flex-row md:flex-wrap md:justify-center md:items-start md:gap-6 lg:gap-8 w-full"
+              : "flex flex-col items-center px-14"
+          }
+        >
+          {cols.map((col) => {
+            const settledIdx = paneIndex(baseIndex, col, len);
+            const fromIdx = paneIndex(fromBase, col, len);
+            const toIdx = paneIndex(toBase, col, len);
+            const showIdx = transitioning ? toIdx : settledIdx;
+            const label = designs[showIdx].label;
+            const backIdx = transitioning ? fromIdx : settledIdx;
+            const frontIdx = transitioning ? toIdx : settledIdx;
+            const backDesign = designs[backIdx];
+            const frontDesign = designs[frontIdx];
 
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/80 to-transparent p-4 md:p-5 pointer-events-none">
-                <p className="text-cream text-base md:text-lg font-bold uppercase tracking-wider">
-                  {label}
-                </p>
+            return (
+              <div
+                key={col}
+                className={`${paneClass} overflow-hidden rounded-sm shadow-2xl shrink-0 bg-tan`}
+              >
+                {backDesign.src ? (
+                  <Image
+                    src={backDesign.src}
+                    alt=""
+                    fill
+                    sizes={
+                      paneCount === 3
+                        ? "(min-width: 1024px) 33vw, 90vw"
+                        : "(min-width: 768px) 480px, 90vw"
+                    }
+                    className="object-cover transition-opacity ease-out"
+                    style={{
+                      opacity: transitioning ? 0 : 1,
+                      transitionDuration: `${TRANSITION_MS}ms`,
+                    }}
+                    aria-hidden
+                  />
+                ) : (
+                  <div
+                    className="absolute inset-0 transition-opacity ease-out"
+                    style={{
+                      background: textureGradients[
+                        backIdx % textureGradients.length
+                      ],
+                      opacity: transitioning ? 0 : 1,
+                      transitionDuration: `${TRANSITION_MS}ms`,
+                    }}
+                  />
+                )}
+
+                {frontDesign.src ? (
+                  <Image
+                    src={frontDesign.src}
+                    alt=""
+                    fill
+                    sizes={
+                      paneCount === 3
+                        ? "(min-width: 1024px) 33vw, 90vw"
+                        : "(min-width: 768px) 480px, 90vw"
+                    }
+                    className="object-cover transition-opacity ease-out"
+                    style={{
+                      opacity: transitioning ? 1 : 0,
+                      transitionDuration: `${TRANSITION_MS}ms`,
+                    }}
+                    aria-hidden
+                  />
+                ) : (
+                  <div
+                    className="absolute inset-0 transition-opacity ease-out pointer-events-none"
+                    style={{
+                      background: textureGradients[
+                        frontIdx % textureGradients.length
+                      ],
+                      opacity: transitioning ? 1 : 0,
+                      transitionDuration: `${TRANSITION_MS}ms`,
+                    }}
+                  />
+                )}
+
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/80 to-transparent p-4 md:p-5 pointer-events-none">
+                  <p className="text-cream text-base md:text-lg font-bold uppercase tracking-wider">
+                    {label}
+                  </p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => moveDesigns("next")}
+          className="absolute right-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-charcoal/80 text-cream shadow-lg transition-colors duration-300 hover:bg-terracotta disabled:opacity-40"
+          aria-label="Show next design patterns"
+          disabled={len < 2}
+        >
+          <ChevronRight className="h-5 w-5" aria-hidden />
+        </button>
       </div>
 
       <div

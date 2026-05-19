@@ -14,15 +14,11 @@ import DesignShowcase from "@/components/DesignShowcase";
 import CTABanner from "@/components/CTABanner";
 import ScrollReveal from "@/components/ScrollReveal";
 import Marquee from "@/components/Marquee";
+import { getDesignImages } from "@/lib/supabasePhotos";
+import { connection } from "next/server";
 
 const serviceIconClass =
   "w-10 h-10 md:w-12 md:h-12 text-terracotta shrink-0";
-
-/** Stamp design pattern photos in `public/assets/`. */
-const stampPatternImages = Array.from({ length: 10 }, (_, i) => ({
-  src: `/assets/${i + 1}.png`,
-  label: `Pattern ${i + 1}`,
-}));
 
 const services = [
   {
@@ -83,7 +79,10 @@ const services = [
   },
 ];
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  await connection();
+  const stampPatternImages = await getDesignImages();
+
   return (
     <>
       {/* Page hero -- centered */}
