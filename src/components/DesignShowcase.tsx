@@ -111,8 +111,8 @@ export default function DesignShowcase({
 }: DesignShowcaseProps) {
   const designs = images && images.length > 0 ? images : defaultDesigns;
   const len = designs.length;
-  const paneCount =
-    columns === 3 && len >= 3 ? 3 : 1;
+  const [isDesktopThreePane, setIsDesktopThreePane] = useState(false);
+  const paneCount = columns === 3 && len >= 3 && isDesktopThreePane ? 3 : 1;
 
   const [baseIndex, setBaseIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
@@ -172,6 +172,19 @@ export default function DesignShowcase({
     };
   }, []);
 
+  useEffect(() => {
+    if (columns !== 3 || len < 3) {
+      setIsDesktopThreePane(false);
+      return;
+    }
+
+    const media = window.matchMedia("(min-width: 768px)");
+    const sync = () => setIsDesktopThreePane(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, [columns, len]);
+
   const cols = Array.from({ length: paneCount }, (_, i) => i);
 
   const paneClass =
@@ -185,7 +198,7 @@ export default function DesignShowcase({
         <button
           type="button"
           onClick={() => moveDesigns("previous")}
-          className="absolute left-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-charcoal/80 text-cream shadow-lg transition-colors duration-300 hover:bg-terracotta disabled:opacity-40"
+          className="absolute left-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-green-700/90 text-cream shadow-lg transition-colors duration-300 hover:bg-green-600 disabled:opacity-40"
           aria-label="Show previous design patterns"
           disabled={len < 2}
         >
@@ -288,7 +301,7 @@ export default function DesignShowcase({
         <button
           type="button"
           onClick={() => moveDesigns("next")}
-          className="absolute right-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-charcoal/80 text-cream shadow-lg transition-colors duration-300 hover:bg-terracotta disabled:opacity-40"
+          className="absolute right-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-green-700/90 text-cream shadow-lg transition-colors duration-300 hover:bg-green-600 disabled:opacity-40"
           aria-label="Show next design patterns"
           disabled={len < 2}
         >
