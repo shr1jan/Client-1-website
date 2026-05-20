@@ -27,25 +27,6 @@ export default async function ServicesPage() {
 
       <Marquee text="STAMPED CONCRETE EXPERTS" />
 
-      {/* Design Showcase -- centered */}
-      <section className="py-12 md:py-18 bg-cream">
-        <div className="max-w-7xl mx-auto px-6">
-          <ScrollReveal>
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-black text-charcoal uppercase tracking-tight">
-                Stamp Design Patterns
-              </h2>
-              <p className="mt-3 text-warm-gray text-lg max-w-lg mx-auto">
-                Watch as our signature patterns come to life
-              </p>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={200}>
-            <DesignShowcase images={stampPatternImages} columns={3} />
-          </ScrollReveal>
-        </div>
-      </section>
-
       {/* Services -- same content as home page */}
       <section className="py-12 md:py-18 bg-cream-dark">
         <div className="max-w-7xl mx-auto px-6">
@@ -60,6 +41,25 @@ export default async function ServicesPage() {
           </ScrollReveal>
           <ScrollReveal delay={100}>
             <ServicesShowcase />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Design Showcase -- after services */}
+      <section className="py-12 md:py-18 bg-cream">
+        <div className="max-w-7xl mx-auto px-6">
+          <ScrollReveal>
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-black text-charcoal uppercase tracking-tight">
+                Stamp Design Patterns
+              </h2>
+              <p className="mt-3 text-warm-gray text-lg max-w-lg mx-auto">
+                Watch as our signature patterns come to life
+              </p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={200}>
+            <DesignShowcase images={stampPatternImages} columns={3} />
           </ScrollReveal>
         </div>
       </section>

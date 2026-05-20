@@ -176,7 +176,7 @@ export default function DesignShowcase({
 
   const paneClass =
     paneCount === 3
-      ? "relative aspect-square w-[min(92vw,360px)] sm:w-[340px] md:w-[300px] lg:w-[340px] xl:w-[380px]"
+      ? "relative aspect-square w-full min-w-0"
       : "relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[420px] md:h-[420px] lg:w-[480px] lg:h-[480px]";
 
   return (
@@ -195,7 +195,7 @@ export default function DesignShowcase({
         <div
           className={
             paneCount === 3
-              ? "flex flex-col items-center gap-10 px-14 md:flex-row md:flex-wrap md:justify-center md:items-start md:gap-6 lg:gap-8 w-full"
+              ? "grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8 px-14 w-full max-w-5xl mx-auto"
               : "flex flex-col items-center px-14"
           }
         >
