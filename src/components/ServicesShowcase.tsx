@@ -10,13 +10,13 @@ const serviceApplicationItemClass =
   "group block shrink-0 w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4rem)/3)]";
 
 interface ServicesShowcaseProps {
-  featuredHref?: string;
+  featuredLinks?: Partial<Record<(typeof featuredServices)[number]["title"], string>>;
   applicationHref?: string;
   twoColumnMobileApplications?: boolean;
 }
 
 export default function ServicesShowcase({
-  featuredHref,
+  featuredLinks,
   applicationHref,
   twoColumnMobileApplications = false,
 }: ServicesShowcaseProps) {
@@ -48,6 +48,8 @@ export default function ServicesShowcase({
 
           const cardClassName =
             "group overflow-hidden rounded-sm bg-white border border-tan/20 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-terracotta/30 hover:shadow-xl";
+
+          const featuredHref = featuredLinks?.[service.title] ?? service.href;
 
           if (featuredHref) {
             return (

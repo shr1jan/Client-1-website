@@ -1,6 +1,7 @@
 export const featuredServices = [
   {
     title: "Stamp Concrete",
+    href: "/services/stamp-concrete",
     imageSrc: "/assets/stamp.jpg",
     imageAlt: "Stamped concrete patio surface",
     description:
@@ -8,6 +9,7 @@ export const featuredServices = [
   },
   {
     title: "Trimix Flooring",
+    href: "/services/trimix-flooring",
     imageSrc: "/assets/trimix.jpg",
     imageAlt: "Trimix concrete flooring surface",
     description:

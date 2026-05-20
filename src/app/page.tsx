@@ -77,7 +77,7 @@ export default async function Home() {
             />
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <ServicesShowcase featuredHref="/services" applicationHref="/services" />
+            <ServicesShowcase applicationHref="/services" />
           </ScrollReveal>
           <ScrollReveal delay={250}>
             <div className="mt-12 text-center">

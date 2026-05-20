@@ -40,7 +40,7 @@ export default async function ServicesPage() {
             />
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <ServicesShowcase featuredHref="/gallery" twoColumnMobileApplications />
+            <ServicesShowcase twoColumnMobileApplications />
           </ScrollReveal>
         </div>
       </section>
