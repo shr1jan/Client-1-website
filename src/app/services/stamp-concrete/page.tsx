@@ -101,18 +101,18 @@ export default function StampConcretePage() {
       </section>
 
       <section className="py-10 bg-cream">
-        <div className="max-w-7xl mx-auto px-6 text-sm text-warm-gray">
-          Sources:
-          {" "}
-          <Link className="underline" href="https://www.concretenetwork.com/stamped-concrete/">
-            Concrete Network overview
-          </Link>
-          {" · "}
+        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
-            className="underline"
-            href="https://www.concretenetwork.com/stamped-concrete/installation-tips.html"
+            href="/gallery"
+            className="inline-block px-8 py-3 border-2 border-charcoal text-charcoal font-bold text-sm uppercase tracking-wider rounded-sm hover:bg-charcoal hover:text-cream transition-all duration-300"
           >
-            installation guide
+            View Our Work
+          </Link>
+          <Link
+            href="/services#stamp-design-patterns"
+            className="inline-block px-8 py-3 border-2 border-charcoal text-charcoal font-bold text-sm uppercase tracking-wider rounded-sm hover:bg-charcoal hover:text-cream transition-all duration-300"
+          >
+            View Our Designs
           </Link>
         </div>
       </section>

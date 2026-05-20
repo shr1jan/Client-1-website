@@ -99,14 +99,12 @@ export default function TrimixFlooringPage() {
       </section>
 
       <section className="py-10 bg-cream">
-        <div className="max-w-7xl mx-auto px-6 text-sm text-warm-gray">
-          Source:
-          {" "}
+        <div className="max-w-7xl mx-auto px-6 flex justify-center items-center">
           <Link
-            className="underline"
-            href="https://www.livspace.com/in/magazine/vdf-flooring-expert-guide"
+            href="/gallery"
+            className="inline-block px-8 py-3 border-2 border-charcoal text-charcoal font-bold text-sm uppercase tracking-wider rounded-sm hover:bg-charcoal hover:text-cream transition-all duration-300"
           >
-            Livspace VDF flooring guide
+            View Our Work
           </Link>
         </div>
       </section>

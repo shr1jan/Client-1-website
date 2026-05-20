@@ -46,7 +46,7 @@ export default async function ServicesPage() {
       </section>
 
       {/* Design Showcase -- after services */}
-      <section className="py-12 md:py-18 bg-cream">
+      <section id="stamp-design-patterns" className="py-12 md:py-18 bg-cream scroll-mt-28">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-8">
