@@ -11,6 +11,7 @@ import CTABanner from "@/components/CTABanner";
 import ScrollReveal from "@/components/ScrollReveal";
 import { siteConfig } from "@/config/siteConfig";
 import { getGalleryPhotos } from "@/lib/supabasePhotos";
+import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
 
@@ -47,18 +48,31 @@ const features = [
 const servicePreview = [
   { icon: "⬡", title: "Stamped Patios", href: "/services" },
   { icon: "⬢", title: "Driveways", href: "/services" },
-  { icon: "◎", title: "Pool Decks", href: "/services" },
-  { icon: "▣", title: "Interior Floors", href: "/services" },
-  { icon: "◈", title: "Resurfacing", href: "/services" },
+];
+
+const featuredServiceDescriptions = [
+  {
+    title: "Stamp Concrete",
+    imageSrc: "/assets/stamp.jpg",
+    imageAlt: "Stamped concrete patio surface",
+    description:
+      "Stamped concrete is a decorative technique that imprints patterns and textures onto fresh concrete to mimic premium materials like natural stone, slate, brick, or wood. It is a highly durable, cost-effective, and customizable alternative for driveways, patios, and walkways.",
+  },
+  {
+    title: "Trimix Flooring",
+    imageSrc: "/assets/trimix.jpg",
+    imageAlt: "Trimix concrete flooring surface",
+    description:
+      "Trimix Flooring, also known as Vacuum Dewatered Flooring (VDF), is a heavy-duty industrial concrete flooring technique. It achieves high compressive strength and wear resistance by extracting excess water from the freshly poured concrete using a specialized vacuum pump, resulting in a floor designed for high-impact and heavy-load environments.",
+  },
 ];
 
 /**
  * Flex + wrap + justify-center centers any short last row (1 item, 2 items, …)
- * for any number of services. Widths match the container gaps: gap-6 (1.5rem)
- * for 2- and 3-column layouts, md:gap-8 (2rem) for 5-column.
+ * for any number of services. These remain compact below the larger feature cards.
  */
 const servicePreviewItemClass =
-  "group block shrink-0 w-[calc((100%-1.5rem)/2)] sm:w-[calc((100%-3rem)/3)] md:w-[calc((100%-8rem)/5)]";
+  "group block shrink-0 w-[calc((100%-1.5rem)/2)] sm:w-48 md:w-52";
 
 const stats = [
   { label: "Years Experience", value: siteConfig.stats.yearsInBusiness, suffix: "+" },
@@ -109,12 +123,40 @@ export default async function Home() {
             <SectionHeader
               topText="Our"
               bottomText="Services"
-              description="From patios to pool decks, we transform any surface into a work of art."
+              description="Decorative finishes and heavy-duty concrete flooring for residential and commercial projects."
               align="right"
               className="mb-8 md:mb-10"
             />
           </ScrollReveal>
           <ScrollReveal delay={100}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-12">
+              {featuredServiceDescriptions.map((service) => (
+                <article
+                  key={service.title}
+                  className="group overflow-hidden rounded-sm bg-white border border-tan/20 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-terracotta/30 hover:shadow-xl"
+                >
+                  <div className="relative aspect-[4/3] bg-tan overflow-hidden">
+                    <Image
+                      src={service.imageSrc}
+                      alt={service.imageAlt}
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-6 md:p-8">
+                    <h3 className="text-xl md:text-2xl font-black text-charcoal uppercase tracking-wide">
+                      {service.title}
+                    </h3>
+                    <p className="mt-4 text-sm md:text-base text-warm-gray leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={200}>
             <div className="flex flex-wrap justify-center gap-6 md:gap-8">
               {servicePreview.map((service) => (
                 <Link
