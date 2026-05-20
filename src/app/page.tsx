@@ -46,8 +46,42 @@ const features = [
 ];
 
 const servicePreview = [
-  { icon: "⬡", title: "Stamped Patios", href: "/services" },
-  { icon: "⬢", title: "Driveways", href: "/services" },
+  {
+    title: "Terrace",
+    imageSrc: "/assets/PHOTO-2026-05-19-15-41-13.jpg",
+    imageAlt: "Red stamped concrete terrace",
+    href: "/services",
+  },
+  {
+    title: "Driveway",
+    imageSrc: "/assets/PHOTO-2026-05-19-15-41-13%202.jpg",
+    imageAlt: "Stamped concrete driveway through a garden",
+    href: "/services",
+  },
+  {
+    title: "Rooftop Flooring",
+    imageSrc: "/assets/PHOTO-2026-05-19-15-41-13%203.jpg",
+    imageAlt: "Grey concrete rooftop flooring",
+    href: "/services",
+  },
+  {
+    title: "Patio",
+    imageSrc: "/assets/PHOTO-2026-05-19-15-41-14.jpg",
+    imageAlt: "Stamped concrete patio beside a home",
+    href: "/services",
+  },
+  {
+    title: "Stairs",
+    imageSrc: "/assets/PHOTO-2026-05-19-15-41-14%202.jpg",
+    imageAlt: "Stamped concrete outdoor stairs",
+    href: "/services",
+  },
+  {
+    title: "Walkway",
+    imageSrc: "/assets/PHOTO-2026-05-19-15-41-14%203.jpg",
+    imageAlt: "Stamped concrete covered walkway",
+    href: "/services",
+  },
 ];
 
 const featuredServiceDescriptions = [
@@ -72,7 +106,7 @@ const featuredServiceDescriptions = [
  * for any number of services. These remain compact below the larger feature cards.
  */
 const servicePreviewItemClass =
-  "group block shrink-0 w-[calc((100%-1.5rem)/2)] sm:w-48 md:w-52";
+  "group block shrink-0 w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4rem)/3)]";
 
 const stats = [
   { label: "Years Experience", value: siteConfig.stats.yearsInBusiness, suffix: "+" },
@@ -164,8 +198,14 @@ export default async function Home() {
                   href={service.href}
                   className={servicePreviewItemClass}
                 >
-                  <div className="concrete-texture aspect-square w-full rounded-sm flex items-center justify-center text-4xl md:text-5xl text-cream group-hover:scale-105 transition-transform duration-500 shadow-md">
-                    {service.icon}
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-tan shadow-md">
+                    <Image
+                      src={service.imageSrc}
+                      alt={service.imageAlt}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
                   </div>
                   <p className="mt-4 text-center font-bold text-charcoal uppercase tracking-wider text-xs md:text-sm group-hover:text-terracotta transition-colors">
                     {service.title}
