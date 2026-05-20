@@ -63,29 +63,6 @@ export default async function Home() {
         photos={heroPhotos}
         initialPhotoIndex={initialHeroPhotoIndex}
       />
-      <Marquee text={siteConfig.businessName.toUpperCase()} />
-
-      {/* Why Choose Us -- centered */}
-      <section className="py-12 md:py-18 bg-cream">
-        <div className="max-w-7xl mx-auto px-6">
-          <ScrollReveal>
-            <SectionHeader
-              topText="Why"
-              bottomText="Choose Us"
-              description="We combine artistry with engineering to deliver surfaces that are as durable as they are beautiful."
-              align="center"
-              className="mb-8 md:mb-10"
-            />
-          </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-            {features.map((feature, i) => (
-              <ScrollReveal key={feature.title} delay={i * 150}>
-                <ServiceCard {...feature} />
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Services Preview -- right aligned header */}
       <section className="py-12 md:py-18 bg-cream-dark">
@@ -112,6 +89,30 @@ export default async function Home() {
               </Link>
             </div>
           </ScrollReveal>
+        </div>
+      </section>
+
+      <Marquee text={siteConfig.businessName.toUpperCase()} />
+
+      {/* Why Choose Us -- centered */}
+      <section className="py-12 md:py-18 bg-cream">
+        <div className="max-w-7xl mx-auto px-6">
+          <ScrollReveal>
+            <SectionHeader
+              topText="Why"
+              bottomText="Choose Us"
+              description="We combine artistry with engineering to deliver surfaces that are as durable as they are beautiful."
+              align="center"
+              className="mb-8 md:mb-10"
+            />
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+            {features.map((feature, i) => (
+              <ScrollReveal key={feature.title} delay={i * 150}>
+                <ServiceCard {...feature} />
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 

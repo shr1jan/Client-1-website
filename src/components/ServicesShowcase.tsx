@@ -11,10 +11,12 @@ const serviceApplicationItemClass =
 
 interface ServicesShowcaseProps {
   applicationHref?: string;
+  twoColumnMobileApplications?: boolean;
 }
 
 export default function ServicesShowcase({
   applicationHref,
+  twoColumnMobileApplications = false,
 }: ServicesShowcaseProps) {
   return (
     <>
@@ -44,7 +46,13 @@ export default function ServicesShowcase({
           </article>
         ))}
       </div>
-      <div className="flex flex-wrap justify-center gap-6 md:gap-8">
+      <div
+        className={
+          twoColumnMobileApplications
+            ? "grid grid-cols-2 gap-4 sm:gap-6 lg:flex lg:flex-wrap lg:justify-center lg:gap-8"
+            : "flex flex-wrap justify-center gap-6 md:gap-8"
+        }
+      >
         {serviceApplications.map((service) => {
           const inner = (
             <>
