@@ -1,83 +1,12 @@
-import {
-  Armchair,
-  CarFront,
-  Waves,
-  LayoutGrid,
-  RefreshCw,
-  Palette,
-} from "lucide-react";
-
 import SectionHeader from "@/components/SectionHeader";
 import PageHero from "@/components/PageHero";
-import ServiceCard from "@/components/ServiceCard";
+import ServicesShowcase from "@/components/ServicesShowcase";
 import DesignShowcase from "@/components/DesignShowcase";
 import CTABanner from "@/components/CTABanner";
 import ScrollReveal from "@/components/ScrollReveal";
 import Marquee from "@/components/Marquee";
 import { getDesignImages } from "@/lib/supabasePhotos";
 import { connection } from "next/server";
-
-const serviceIconClass =
-  "w-10 h-10 md:w-12 md:h-12 text-terracotta shrink-0";
-
-const services = [
-  {
-    title: "Stamped Concrete Patios",
-    description:
-      "Create a stunning outdoor living space with custom stamped concrete patios. Choose from dozens of patterns including natural stone, slate, brick, and tile designs that transform your backyard into a retreat.",
-    icon: (
-      <Armchair className={serviceIconClass} strokeWidth={1.5} aria-hidden />
-    ),
-  },
-  {
-    title: "Driveways & Walkways",
-    description:
-      "Make a lasting first impression with a beautifully stamped driveway or walkway. Our durable finishes withstand heavy traffic while maintaining their elegant appearance for years to come.",
-    icon: (
-      <CarFront className={serviceIconClass} strokeWidth={1.5} aria-hidden />
-    ),
-  },
-  {
-    title: "Pool Decks",
-    description:
-      "Enhance your pool area with slip-resistant stamped concrete that looks like natural stone or pavers. Cool-touch finishes and custom drainage solutions included in every pool deck project.",
-    icon: (
-      <Waves className={serviceIconClass} strokeWidth={1.5} aria-hidden />
-    ),
-  },
-  {
-    title: "Interior Floors",
-    description:
-      "Bring the beauty of stamped concrete indoors. Perfect for basements, sunrooms, kitchens, and commercial spaces. Our interior finishes are polished, sealed, and easy to maintain.",
-    icon: (
-      <LayoutGrid
-        className={serviceIconClass}
-        strokeWidth={1.5}
-        aria-hidden
-      />
-    ),
-  },
-  {
-    title: "Concrete Resurfacing",
-    description:
-      "Revive existing concrete surfaces with our resurfacing process. We overlay worn or damaged concrete with a fresh stamped finish — a cost-effective alternative to full replacement.",
-    icon: (
-      <RefreshCw
-        className={serviceIconClass}
-        strokeWidth={1.5}
-        aria-hidden
-      />
-    ),
-  },
-  {
-    title: "Custom Patterns & Colors",
-    description:
-      "Can't find the perfect match? We create custom stamp patterns and color blends tailored to your vision. From rustic aged stone to modern geometric designs, the possibilities are limitless.",
-    icon: (
-      <Palette className={serviceIconClass} strokeWidth={1.5} aria-hidden />
-    ),
-  },
-];
 
 export default async function ServicesPage() {
   await connection();
@@ -90,7 +19,7 @@ export default async function ServicesPage() {
         <SectionHeader
           topText="Our"
           bottomText="Services"
-          description="From elegant patios to durable driveways, we specialize in every form of decorative stamped concrete."
+          description="Decorative finishes and heavy-duty concrete flooring for residential and commercial projects."
           light
           align="center"
         />
@@ -117,25 +46,21 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* Services Grid -- left aligned header */}
+      {/* Services -- same content as home page */}
       <section className="py-12 md:py-18 bg-cream-dark">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <SectionHeader
-              topText="What"
-              bottomText="We Do"
-              description="Comprehensive stamped concrete services for residential and commercial projects."
+              topText="Our"
+              bottomText="Services"
+              description="Stamp concrete, trimix flooring, and application types for every residential and commercial project."
               align="left"
               className="mb-8 md:mb-10"
             />
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-start">
-            {services.map((service, i) => (
-              <ScrollReveal key={service.title} delay={i * 100}>
-                <ServiceCard {...service} compact />
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal delay={100}>
+            <ServicesShowcase />
+          </ScrollReveal>
         </div>
       </section>
 
