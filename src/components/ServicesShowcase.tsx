@@ -10,41 +10,59 @@ const serviceApplicationItemClass =
   "group block shrink-0 w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4rem)/3)]";
 
 interface ServicesShowcaseProps {
+  featuredHref?: string;
   applicationHref?: string;
   twoColumnMobileApplications?: boolean;
 }
 
 export default function ServicesShowcase({
+  featuredHref,
   applicationHref,
   twoColumnMobileApplications = false,
 }: ServicesShowcaseProps) {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-12">
-        {featuredServices.map((service) => (
-          <article
-            key={service.title}
-            className="group overflow-hidden rounded-sm bg-white border border-tan/20 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-terracotta/30 hover:shadow-xl"
-          >
-            <div className="relative aspect-[4/3] bg-tan overflow-hidden">
-              <Image
-                src={service.imageSrc}
-                alt={service.imageAlt}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
-            <div className="p-6 md:p-8">
-              <h3 className="text-xl md:text-2xl font-black text-charcoal uppercase tracking-wide">
-                {service.title}
-              </h3>
-              <p className="mt-4 text-sm md:text-base text-warm-gray leading-relaxed">
-                {service.description}
-              </p>
-            </div>
-          </article>
-        ))}
+        {featuredServices.map((service) => {
+          const card = (
+            <>
+              <div className="relative aspect-[4/3] bg-tan overflow-hidden">
+                <Image
+                  src={service.imageSrc}
+                  alt={service.imageAlt}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6 md:p-8">
+                <h3 className="text-xl md:text-2xl font-black text-charcoal uppercase tracking-wide">
+                  {service.title}
+                </h3>
+                <p className="mt-4 text-sm md:text-base text-warm-gray leading-relaxed">
+                  {service.description}
+                </p>
+              </div>
+            </>
+          );
+
+          const cardClassName =
+            "group overflow-hidden rounded-sm bg-white border border-tan/20 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-terracotta/30 hover:shadow-xl";
+
+          if (featuredHref) {
+            return (
+              <Link key={service.title} href={featuredHref} className={cardClassName}>
+                {card}
+              </Link>
+            );
+          }
+
+          return (
+            <article key={service.title} className={cardClassName}>
+              {card}
+            </article>
+          );
+        })}
       </div>
       <div
         className={
