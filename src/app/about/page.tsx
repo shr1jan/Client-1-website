@@ -1,3 +1,4 @@
+import Image from "next/image";
 import SectionHeader from "@/components/SectionHeader";
 import PageHero from "@/components/PageHero";
 import StatsCounter from "@/components/StatsCounter";
@@ -10,11 +11,13 @@ const team = [
   {
     name: "Anush Bhattarai",
     role: "Marketing Manager",
+    image: "/assets/anushbhattrai.png",
     bio: "Leads client communication, brand outreach, and project coordination so every customer experience feels clear and responsive.",
   },
   {
     name: "Netra Bahadur Bhattarai",
     role: "CEO",
+    image: "/assets/netrabhattrai.png",
     bio: "Guides the company with hands-on industry knowledge, a focus on quality workmanship, and a commitment to dependable service.",
   },
 ];
@@ -152,8 +155,14 @@ export default function AboutPage() {
             {team.map((member, i) => (
               <ScrollReveal key={i} delay={i * 150}>
                 <div className="text-center group">
-                  <div className="w-40 h-40 mx-auto rounded-full concrete-texture-light shadow-md group-hover:shadow-xl transition-shadow duration-500 flex items-center justify-center">
-                    <span className="text-4xl text-brown">&#9679;</span>
+                  <div className="relative w-40 h-40 md:w-44 md:h-44 mx-auto overflow-hidden rounded-full border-4 border-white shadow-md group-hover:shadow-xl transition-shadow duration-500 bg-tan">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      sizes="(min-width: 768px) 176px, 160px"
+                      className="object-cover"
+                    />
                   </div>
                   <h3 className="mt-6 text-lg font-bold text-charcoal uppercase tracking-wide">
                     {member.name}
