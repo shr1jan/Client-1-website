@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface DesignShowcaseProps {
@@ -12,6 +18,7 @@ interface DesignShowcaseProps {
 }
 
 const TRANSITION_MS = 700;
+const DESKTOP_MEDIA_QUERY = "(min-width: 768px)";
 
 const defaultDesigns = [
   { src: "", label: "Ashlar Slate" },
@@ -31,6 +38,20 @@ const textureGradients = [
 
 function paneIndex(base: number, col: number, len: number) {
   return ((base + col) % len + len) % len;
+}
+
+function subscribeToDesktopViewport(onStoreChange: () => void) {
+  const media = window.matchMedia(DESKTOP_MEDIA_QUERY);
+  media.addEventListener("change", onStoreChange);
+  return () => media.removeEventListener("change", onStoreChange);
+}
+
+function getDesktopViewportSnapshot() {
+  return window.matchMedia(DESKTOP_MEDIA_QUERY).matches;
+}
+
+function getServerViewportSnapshot() {
+  return false;
 }
 
 /** Indices shown when the left column starts at `base`. */
@@ -111,8 +132,12 @@ export default function DesignShowcase({
 }: DesignShowcaseProps) {
   const designs = images && images.length > 0 ? images : defaultDesigns;
   const len = designs.length;
-  const [isDesktopThreePane, setIsDesktopThreePane] = useState(false);
-  const paneCount = columns === 3 && len >= 3 && isDesktopThreePane ? 3 : 1;
+  const isDesktopViewport = useSyncExternalStore(
+    subscribeToDesktopViewport,
+    getDesktopViewportSnapshot,
+    getServerViewportSnapshot
+  );
+  const paneCount = columns === 3 && len >= 3 && isDesktopViewport ? 3 : 1;
 
   const [baseIndex, setBaseIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
@@ -171,19 +196,6 @@ export default function DesignShowcase({
       if (transitionTimeout.current) clearTimeout(transitionTimeout.current);
     };
   }, []);
-
-  useEffect(() => {
-    if (columns !== 3 || len < 3) {
-      setIsDesktopThreePane(false);
-      return;
-    }
-
-    const media = window.matchMedia("(min-width: 768px)");
-    const sync = () => setIsDesktopThreePane(media.matches);
-    sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
-  }, [columns, len]);
 
   const cols = Array.from({ length: paneCount }, (_, i) => i);
 

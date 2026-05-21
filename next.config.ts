@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseStoragePattern = supabaseUrl
@@ -13,6 +14,9 @@ const nextConfig: NextConfig = {
     "192.168.*.*",
     "*.loca.lt",
   ],
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
   images: {
     remotePatterns: supabaseStoragePattern,
   },

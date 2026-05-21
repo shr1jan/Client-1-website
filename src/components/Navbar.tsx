@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/siteConfig";
 
@@ -13,25 +13,47 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+function subscribeToScrollPosition(onStoreChange: () => void) {
+  window.addEventListener("scroll", onStoreChange, { passive: true });
+  window.addEventListener("resize", onStoreChange);
+  return () => {
+    window.removeEventListener("scroll", onStoreChange);
+    window.removeEventListener("resize", onStoreChange);
+  };
+}
+
+function getPastHeroScrollSnapshot() {
+  return window.scrollY > window.innerHeight * 0.1;
+}
+
+function getServerPastHeroScrollSnapshot() {
+  return false;
+}
+
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [pastHero, setPastHero] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState<{
+    isOpen: boolean;
+    pathname: string | null;
+  }>({ isOpen: false, pathname: null });
   const pathname = usePathname();
+  const scrolledPastHero = useSyncExternalStore(
+    subscribeToScrollPosition,
+    getPastHeroScrollSnapshot,
+    getServerPastHeroScrollSnapshot
+  );
 
   const isHome = pathname === "/";
-
-  useEffect(() => {
-    if (!isHome) {
-      setPastHero(true);
-      return;
-    }
-    const handleScroll = () => {
-      setPastHero(window.scrollY > window.innerHeight * 0.1);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHome]);
+  const pastHero = !isHome || scrolledPastHero;
+  const mobileOpen = mobileMenu.isOpen && mobileMenu.pathname === pathname;
+  const toggleMobileMenu = () => {
+    setMobileMenu((current) => ({
+      isOpen: !(current.isOpen && current.pathname === pathname),
+      pathname,
+    }));
+  };
+  const closeMobileMenu = () => {
+    setMobileMenu({ isOpen: false, pathname });
+  };
 
   useEffect(() => {
     if (mobileOpen) {
@@ -43,10 +65,6 @@ export default function Navbar() {
       document.body.style.overflow = "";
     }
   }, [mobileOpen]);
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -100,7 +118,7 @@ export default function Navbar() {
           </Link>
 
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
+            onClick={toggleMobileMenu}
             className="flex flex-col justify-center items-center w-10 h-10 p-2"
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
@@ -135,6 +153,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={closeMobileMenu}
                 className={`text-base uppercase tracking-[0.15em] transition-colors duration-300 font-medium ${
                   isActive(link.href)
                     ? "text-terracotta"
@@ -146,6 +165,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/contact"
+              onClick={closeMobileMenu}
               className="mt-2 px-6 py-3 bg-terracotta text-white text-sm font-bold uppercase tracking-wider rounded-sm text-center hover:bg-terracotta-dark transition-colors"
             >
               Free Quote
